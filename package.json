@@ -1,6 +1,6 @@
 {
   "name": "dsh-theme-tnolar",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "DSH TNOLAR strategic terminal theme with skeuomorphic counter-clockwise mechanical key startup animation",
   "type": "module",
   "main": "./lib/index.js",
