@@ -41,7 +41,7 @@ assert.match(themeCss, /--dsw-radius-md/);
 assert.match(themeCss, /data-tnolar-theme/);
 assert.match(client, /function createOverlay\(/);
 assert.match(client, /frame\.setAttribute\('sandbox', 'allow-scripts'\)/);
-assert.match(client, /const MAX_DURATION_MS = 19000/);
+assert.match(client, /const MAX_DURATION_MS = 120000/);
 assert.match(html, /window\.addEventListener\('dsh:startup-complete'/);
 for (const file of ['lib/index.js','lib/client.js','cordis.patch.yml','licenses/GSHHG-LGPL-3.txt','THIRD_PARTY_NOTICES.md']) {
   assert.ok(existsSync(resolve(root,file)), 'Missing '+file);
@@ -53,4 +53,8 @@ const routeMatch=html.match(/const ROUTE_CODES=\[([\s\S]*?)\n \];/);
 assert.ok(routeMatch);
 assert.equal((routeMatch[1].match(/\['C-\d{2}','C-\d{2}'\]/g)||[]).length,14);
 assert.match(html, /CAPITAL MESH 09 NODES · 14 LINKS/);
+assert.match(html, /@keyframes key-turn\{/);
+assert.match(html, /@keyframes unlock-pulse\{/);
+assert.match(html, /点 击 授 权 解 锁/);
+assert.match(html, /请您指挥/);
 console.log('DSH classic-script registration, manifest, assets, 9-capital/14-link rule: PASS');

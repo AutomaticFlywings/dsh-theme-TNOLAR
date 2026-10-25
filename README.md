@@ -1,6 +1,6 @@
 # DSH Theme TNOLAR｜战略指挥终端主题 + 世界地图启动动画
 
-> 面向 **DeepSeek Harness（DSH）Web** 的非官方深色主题插件：以 TNO / LAR 式冷战控制台为视觉灵感，统一工作区、侧栏会话、顶部标题区与聊天输入区，并提供独立的全球首都网络开机动画。
+> 面向 **DeepSeek Harness（DSH）Web** 的非官方深色主题插件：以 TNO / LAR 式冷战控制台为视觉灵感，统一工作区、侧栏会话、顶部标题区与聊天输入区，并提供独立的全球首都网络开机动画与交互式授权解锁界面。
 >
 > **非官方作品**。不包含 TNO/LAR 游戏源码或专有贴图；地图线路、权限解锁和系统状态均为视觉演示，**不代表实际联网或真实授权**。
 
@@ -18,11 +18,11 @@
 - **完整 DSH 主题化（v0.4.0 起）**：侧栏底板、插件导航、工作区分组、会话 hover / 选中态、顶部会话标题栏、面包屑、标签页、输入框、发送按钮、通用按钮、对焦描边、代码块与滚动条。视觉重点为军工设备面板、扫描网格、青绿信号光和低干扰高对比文本。
 - **可靠的会话识别**：当前会话带青绿色左侧识别条、边框与弱光晕；其他会话保持暗色，避免亮色块喧宾夺主。
 - **统一交互体系**：将 DSH `--dsw-*` 语义变量和圆角尺度统一到深色控制台风格；危险/错误状态保留红色，不会全部被染成绿色。
-- **动画与主题结合**：开机自检 → 世界地图扫描 → 14 条指定路线建立 → 授权解锁 → 进入控制台；动画结束自动回到主界面。
+- **动画与主题结合**：开机自检 → 世界地图扫描 → 14 条指定路线建立 → 用户点击“授权解锁” → 密钥转动 → “请您指挥”待命卡片 → 用户点击进入控制台。
 - **9 个首都，14 条路线**：已删除巴黎与其他多余连接，节点坐标按真实经纬度投影，曲线路径是动画示意。
-- **可独立启停**：启动动画与主界面主题可分别开关，支持重播、跳过、超时自动退出；插件卸载时撤销样式和遮罩。
+- **可独立启停**：启动动画与主界面主题可分别开关，支持重播、跳过、交互授权、显式进入控制台；插件卸载时撤销样式和遮罩。
 - **无需联网资源**：内置 HTML/SVG/CSS/JS；动画使用限制脚本权限的 sandbox iframe，不读取会话内容，不调用 SSH 或 Agent。
-- **v0.4.1 启动兼容性修复**：客户端构建为 DSH 所需的 classic-script 模块注册格式，修复此前 `Unexpected token 'export'` 导致的 Web 启动中断。
+- **v0.5.0 交互与细节增强**：授权流程支持点击触发与密钥转动动画，待命文案更新，并继续保留 v0.4.1 对 classic-script 启动兼容性的修复。
 
 > **兼容性说明**：已经完成打包检查、9 节点/14 链路测试和带模拟 DSH DOM 的浏览器烟雾测试；尚未在所有真实 DSH 安装与桌面环境上逐一验证。建议首次在独立 profile 中测试。v0.4.1 已通过 DSH classic-script 协议模拟测试，但仍需在真实 DSH 环境验证。GitHub README 的 SVG 预览为示意插画，非实际 DSH 运行截图；本地浏览器模拟测试另有 PNG 预览。
 
@@ -70,7 +70,7 @@ dsh --profile web
 
 ```bash
 # 在下载了相应 tgz 的目录中执行
-dsh plugin --profile web add "./dsh-theme-tnolar-0.4.1.tgz"
+dsh plugin --profile web add "./dsh-theme-tnolar-0.5.0.tgz"
 
 # 卸载后重启 DSH Web
 dsh plugin --profile web remove dsh-theme-tnolar
@@ -121,7 +121,7 @@ window.DSHTNOLAR.setThemeEnabled(false);  // 立即关闭 TNOLAR 主题
 window.DSHTNOLAR.setThemeEnabled(true);   // 立即开启 TNOLAR 主题
 ```
 
-主题及动画开关分别存放于浏览器 `localStorage`；本版本没有 DSH 设置页图形开关。浏览器“减少动态效果”设置可影响开场动画。若动画加载失败或无法退出，插件有 19 秒看门狗保护，且可以用 `Esc` 直接跳过。
+主题及动画开关分别存放于浏览器 `localStorage`；本版本没有 DSH 设置页图形开关。浏览器“减少动态效果”设置可影响开场动画。交互式动画会等待点击，不会在“系统已就绪”时自动退出；若动画加载失败或长时间无人操作，插件保留 120 秒看门狗保护，随时可以按 `Esc` 或点击“跳过动画”离开。
 
 ## 项目结构
 
@@ -142,7 +142,8 @@ dsh-theme-TNOLAR/
 ├── scripts/
 │   ├── build.mjs                    # 打包 HTML 与主题 CSS 到 lib/client.js
 │   ├── check.mjs                    # 校验构建文件与 DSH 清单
-│   └── verify-browser.py           # 浏览器端模拟宿主测试（可选）
+│   ├── verify-browser.py           # 浏览器端模拟宿主测试（可选）
+│   └── verify-interaction.py       # 手动授权/密钥转动/进入控制台流程测试（可选）
 ├── docs/
 │   ├── preview-tnolar-theme.svg    # 主题预览：GitHub 插画示意
 │   ├── preview-tnolar-map.svg      # 启动地图预览：GitHub 插画示意
@@ -187,6 +188,7 @@ npm pack --dry-run
 
 ```bash
 python scripts/verify-browser.py
+python scripts/verify-interaction.py
 ```
 
 每次修改 `src/client.template.js`、`src/tnolar-theme.css` 或 `assets/world-startup.html` 后，请先执行 `npm run build`，并将更新后的 `lib/client.js` 一起提交。`lib/index.js` 是 Host 侧 ESM，`lib/client.js` 则必须是 classic-script；两者的打包方式不能混用。仓库里的 CI 在 push 和 PR 时验证构建、静态规则与安装包组成，但 **不能代替在真实 DSH 环境安装测试**。

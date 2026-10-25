@@ -8,8 +8,7 @@ const PREFERENCE_KEY = 'dsh-theme-tnolar:enabled';
 const THEME_KEY = 'dsh-theme-tnolar:theme-enabled';
 const OVERLAY_ID = 'dsh-theme-tnolar-overlay';
 const THEME_STYLE_ID = 'dsh-theme-tnolar-theme-style';
-const MAX_DURATION_MS = 19000; // fail open if the animation stops responding
-const FINISH_HOLD_MS = 1800;   // let the final 9-capital network be visible
+const MAX_DURATION_MS = 120000; // interactive startup: fail open after a long idle period
 let current = null;
 
 
@@ -123,10 +122,6 @@ function createOverlay() {
   function onMessage(event) {
     if (event.source !== frame.contentWindow || !event.data || event.data.source !== 'dsh-theme-tnolar') return;
     if (event.data.event === 'enter' || event.data.event === 'skip') close();
-    if (event.data.event === 'complete' && !done) {
-      window.clearTimeout(closeTimer);
-      closeTimer = window.setTimeout(close, FINISH_HOLD_MS);
-    }
   }
   current = { close, cleanup };
   window.addEventListener('message', onMessage);

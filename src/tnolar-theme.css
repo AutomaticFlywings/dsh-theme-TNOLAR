@@ -329,3 +329,49 @@ html[data-tnolar-theme="1"] #root * { scrollbar-color: #355a62 transparent; }
   html[data-tnolar-theme="1"] #root [class*="sectionLabel"]{letter-spacing:.07em;}
   html[data-tnolar-theme="1"] #root [class*="headerUtilities"]{gap:4px;}
 }
+
+
+/* Input accessories and small action chips: remove the remaining light/default
+ * surfaces in the composer bay and plugin/category selectors. */
+html[data-tnolar-theme="1"] #root [class*="InputBar_card"] :is(button,[role="button"]):not([class*="InputBar_primary"]) {
+  border: 1px solid rgba(101, 193, 192, .42);
+  background: linear-gradient(180deg, rgba(17,54,64,.92), rgba(10,33,41,.94));
+  color: #d9f6f0;
+  box-shadow: inset 0 1px rgba(135,235,225,.07), 0 0 0 1px rgba(22,83,88,.18);
+}
+html[data-tnolar-theme="1"] #root [class*="InputBar_card"] :is(button,[role="button"]):not([class*="InputBar_primary"]):hover {
+  background: linear-gradient(180deg, rgba(25,73,82,.96), rgba(13,42,49,.96));
+  border-color: rgba(122, 229, 220, .62);
+}
+html[data-tnolar-theme="1"] #root :is([role="tab"],[class*="chip"],[class*="Chip"],[class*="pill"],[class*="Pill"],[class*="segmentedItem"],[class*="modeSwitch"]):is([aria-selected="true"],[data-state="active"],[aria-pressed="true"],[data-active="true"]) {
+  background: linear-gradient(90deg, rgba(27,92,100,.88), rgba(16,46,56,.92)) !important;
+  border-color: rgba(123,240,225,.66) !important;
+  color: #effffb !important;
+  box-shadow: inset 2px 0 #82f4e5, 0 0 16px rgba(56,193,185,.14);
+}
+html[data-tnolar-theme="1"] #root :is([role="tab"],[class*="chip"],[class*="Chip"],[class*="pill"],[class*="Pill"],[class*="segmentedItem"],[class*="modeSwitch"]) {
+  border-radius: 999px;
+}
+
+/* Menus and popovers: replace low-contrast grey sheets with TNOLAR panels. */
+html[data-tnolar-theme="1"] body :is([role="menu"],[role="listbox"],[class*="menuContent"],[class*="Menu_content"],[class*="dropdownContent"],[class*="popoverContent"],[class*="Popper_content"]) {
+  background: linear-gradient(180deg, rgba(11,36,44,.98), rgba(7,22,29,.98)) !important;
+  color: #e4f4f0 !important;
+  border: 1px solid rgba(108, 199, 197, .48) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 22px 46px rgba(0,0,0,.42), 0 0 0 1px rgba(21,81,88,.28) !important;
+  backdrop-filter: blur(8px);
+}
+html[data-tnolar-theme="1"] body :is([role="menuitem"],[role="option"],[class*="menuItem"],[class*="Menu_item"],[class*="dropdownItem"],[class*="optionItem"]) {
+  color: #dcedea !important;
+  border-radius: 9px;
+}
+html[data-tnolar-theme="1"] body :is([role="menuitem"],[role="option"],[class*="menuItem"],[class*="Menu_item"],[class*="dropdownItem"],[class*="optionItem"]):hover,
+html[data-tnolar-theme="1"] body :is([role="menuitem"],[role="option"],[class*="menuItem"],[class*="Menu_item"],[class*="dropdownItem"],[class*="optionItem"]):focus-visible {
+  background: rgba(28, 96, 104, .68) !important;
+  color: #ffffff !important;
+}
+html[data-tnolar-theme="1"] body :is([role="menuitem"],[role="option"],[class*="menuItem"],[class*="Menu_item"],[class*="dropdownItem"],[class*="optionItem"]):is([aria-selected="true"],[data-state="checked"],[data-highlighted]) {
+  background: linear-gradient(90deg, rgba(26,90,96,.85), rgba(14,43,52,.9)) !important;
+  color: #f3fffc !important;
+}
