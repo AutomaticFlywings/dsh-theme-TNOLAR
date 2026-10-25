@@ -375,3 +375,21 @@ html[data-tnolar-theme="1"] body :is([role="menuitem"],[role="option"],[class*="
   background: linear-gradient(90deg, rgba(26,90,96,.85), rgba(14,43,52,.9)) !important;
   color: #f3fffc !important;
 }
+
+
+/* Force upload / attachment controls inside the composer to inherit the TNOLAR
+ * icon palette as well; some DSH variants render these icons with hardcoded
+ * light fills unless svg descendants are explicitly themed. */
+html[data-tnolar-theme="1"] #root [class*="InputBar_card"] :is(button,[role="button"],[class*="upload"],[class*="attach"],[aria-label*="上传"],[title*="上传"]) {
+  color: #dffcf6 !important;
+}
+html[data-tnolar-theme="1"] #root [class*="InputBar_card"] :is(button,[role="button"],[class*="upload"],[class*="attach"],[aria-label*="上传"],[title*="上传"]) :is(svg,path,rect,circle,line,polyline,polygon) {
+  color: #dffcf6 !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+html[data-tnolar-theme="1"] #root [class*="InputBar_card"] :is(button,[role="button"],[class*="upload"],[class*="attach"],[aria-label*="上传"],[title*="上传"]):hover :is(svg,path,rect,circle,line,polyline,polygon) {
+  color: #ffffff !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}

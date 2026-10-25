@@ -52,14 +52,14 @@
 .auth-console{position:absolute;top:34%;left:28%;width:44%;color:#b8cece;font:.81em/1.95 var(--mono);letter-spacing:.02em}.auth-console .cmd{white-space:nowrap}.auth-console .cmd::before{content:'> ';color:#67c8c4}.auth-console .cmd.active{color:#b7f4e7}.auth-console .cmd.active::after{content:'█';color:var(--teal);margin-left:.3em;animation:blink .75s steps(2,start) infinite}
 .auth-unlock{position:absolute;bottom:28%;left:50%;transform:translateX(-50%);min-width:23em;font-size:1.08em;letter-spacing:.23em;font-weight:600;color:#e0eceb;border:1px solid rgba(92,180,178,.48);padding:.78em 2.1em;background:repeating-linear-gradient(120deg,rgba(87,170,173,.12) 0,rgba(87,170,173,.12) 2px,rgba(13,30,36,.7) 2px,rgba(13,30,36,.7) 6px);pointer-events:auto;cursor:pointer;box-shadow:inset 0 0 18px rgba(84,193,188,.08),0 0 18px rgba(71,183,178,.12);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background-color .18s ease}.auth-unlock:hover,.auth-unlock:focus-visible{transform:translateX(-50%) translateY(-1px);border-color:#9af7e8;box-shadow:inset 0 0 20px rgba(100,229,214,.12),0 0 24px rgba(92,220,203,.18);outline:none}.auth-unlock.waiting{animation:unlock-pulse 1.8s ease-in-out infinite}.auth-unlock.arming{background:linear-gradient(90deg,rgba(33,88,90,.78),rgba(19,50,58,.85));border-color:#a9fff2}.auth-unlock.done{border-color:#8de7dc;background:linear-gradient(90deg,rgba(40,126,118,.45),rgba(21,68,73,.5))}
 
-/* Industrial key-turn lock assemblies: the bit points straight UP. Each key
- * inserts into the socket, then turns COUNTER-CLOCKWISE ninety degrees. */
+/* Industrial key-turn lock assemblies, now shown as a narrow longitudinal/top-edge view.
+ * The key is seen from its thin side and performs an axial twist around its long centerline. */
 .auth-keys{position:absolute;left:9%;width:82%;bottom:5.9%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2%;text-align:center;z-index:10}
 .auth-key{position:relative;min-width:0;display:flex;align-items:center;flex-direction:column;color:#aac3c3}
 .auth-key .auth-code{font:600 1.02em/1.2 var(--mono);letter-spacing:.13em;color:#96b7ba;text-shadow:0 1px #06161a}
 .auth-key .auth-code::before{content:'[ ';color:#51797d}.auth-key .auth-code::after{content:' ]';color:#51797d}
 .auth-vectors{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
-.lock-interact{display:block;position:relative;width:8.7em;height:7.8em;margin:.15em auto 0;padding:0;border:0;background:none;color:inherit;cursor:pointer;pointer-events:auto;border-radius:8px;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.lock-interact{display:block;position:relative;width:8.7em;height:7.8em;margin:.15em auto 0;padding:0;border:0;background:none;color:inherit;cursor:pointer;pointer-events:auto;border-radius:8px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;perspective:520px;perspective-origin:50% 24%}
 .lock-interact:focus-visible{outline:1px solid #9bffec;outline-offset:-2px}
 .lock-interact:disabled{cursor:default;opacity:1}
 .lock-casing{position:absolute;left:50%;top:2.55em;width:5.25em;height:5.25em;transform:translate(-50%,-50%);border-radius:50%;
@@ -70,30 +70,30 @@
   background:radial-gradient(circle at 25% 24%,#576f74 0,#203640 48%,#0a1b23 73%,#42565a 92%);border:.13em solid #688c8d;box-shadow:inset .13em .15em .4em #a3beb033,inset -.18em -.2em .4em #0008,0 0 0 .15em #07151e,0 .18em .35em #000b}
 .lock-core::before{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:.52em;height:1.95em;border-radius:1em;background:linear-gradient(90deg,#010f15,#273c40,#06141b);box-shadow:inset 0 0 .2em #000,0 0 0 1px #88b3ae66}
 .lock-core::after{content:'';position:absolute;top:.18em;left:50%;width:.2em;height:.39em;transform:translateX(-50%);border-radius:1em;background:#95a8a8;box-shadow:0 0 .4em #8ad7ce44}
-.key-rotor{position:absolute;top:.08em;left:50%;width:5.55em;height:6.65em;transform:translateX(-50%) translateY(.55em) rotate(0deg);transform-origin:50% 40%;filter:drop-shadow(.12em .17em .08em rgba(0,0,0,.85));pointer-events:none}
+.key-rotor{position:absolute;top:.06em;left:50%;width:3.05em;height:6.95em;transform:translateX(-50%) translateY(.58em) rotateY(72deg) rotateZ(0deg);transform-origin:50% 36%;transform-style:preserve-3d;filter:drop-shadow(.12em .17em .08em rgba(0,0,0,.85));pointer-events:none}
 .key-metal{width:100%;height:100%;overflow:visible;display:block;filter:drop-shadow(0 0 .12em #b2e8dc2c)}
+.key-spine{opacity:.96}
+.key-side-flare{mix-blend-mode:screen;opacity:.75}
 .lock-glint{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 70%,rgba(170,248,234,.08) 74%,transparent 79%);pointer-events:none}
 .lock-led{position:absolute;left:50%;bottom:.28em;transform:translateX(-50%);width:.5em;height:.5em;border-radius:50%;border:1px solid #517075;background:#273940;box-shadow:inset 0 1px 2px #06161a,0 0 0 2px #0c252a}
-.auth-key .auth-state{display:block;margin-top:-.06em;min-height:1.4em;color:#7d999c;font:600 .7em/1.4 var(--mono);letter-spacing:.12em}
-.auth-key .auth-hint{font:.5em/1.4 var(--mono);letter-spacing:.08em;color:#51797b;white-space:nowrap}
+.auth-key .auth-state{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .auth-key.turning .key-rotor{animation:key-insert-cw 690ms cubic-bezier(.21,.8,.24,1) both}
 .auth-key.turning .lock-core{animation:core-cw 690ms cubic-bezier(.21,.8,.24,1) both}
 .auth-key.turning .lock-casing{border-color:#b3ded5;box-shadow:inset 0 0 .4em #050f13,0 .25em .65em #000a,0 0 0 .14em #05141a,0 0 1.25em #70dfd65c}
 .auth-key.turning .lock-led{background:#d4b96e;box-shadow:0 0 .75em #ffd793}
-.auth-key.unlocked .key-rotor{transform:translateX(-50%) translateY(0) rotate(90deg)}
+.auth-key.unlocked .key-rotor{transform:translateX(-50%) translateY(0) rotateY(-18deg) rotateZ(0deg)}
 .auth-key.unlocked .lock-core{transform:translate(-50%,-50%) rotate(90deg);border-color:#a5dfd1;background:radial-gradient(circle at 25% 24%,#527b7a 0,#1c4e50 48%,#0a282f 80%)}
 .auth-key.unlocked .lock-casing{border-color:#80d1c6;box-shadow:inset 0 0 .4em #010c11,0 .25em .6em #0009,0 0 0 .15em #061319,0 0 1.1em #40cfc353}
 .auth-key.unlocked .lock-led{background:#92f6df;border-color:#c8fff1;box-shadow:0 0 .65em #7dffe0,0 0 1em #63e7d3}
 .auth-key.unlocked .auth-code,.auth-key.unlocked .auth-state{color:#baf5e8;text-shadow:0 0 .5em #69dcca59}
-.auth-key.unlocked .auth-hint{color:#72c2b7}
 .lock-interact:not(:disabled):hover .lock-casing,.lock-interact:not(:disabled):focus-visible .lock-casing{border-color:#9fe7de;box-shadow:inset 0 0 .35em #010c11,0 .25em .6em #0009,0 0 0 .15em #061319,0 0 1.2em #52d7cf4d}
 @keyframes key-insert-cw{
-  0%{transform:translateX(-50%) translateY(.55em) rotate(0deg)}
-  22%{transform:translateX(-50%) translateY(0) rotate(0deg)}
-  36%{transform:translateX(-50%) translateY(0) rotate(8deg)}
-  72%{transform:translateX(-50%) translateY(0) rotate(75deg)}
-  87%{transform:translateX(-50%) translateY(0) rotate(96deg)}
-  100%{transform:translateX(-50%) translateY(0) rotate(90deg)}
+  0%{transform:translateX(-50%) translateY(.58em) rotateY(72deg) rotateZ(0deg)}
+  22%{transform:translateX(-50%) translateY(0) rotateY(72deg) rotateZ(0deg)}
+  48%{transform:translateX(-50%) translateY(0) rotateY(30deg) rotateZ(0deg)}
+  72%{transform:translateX(-50%) translateY(0) rotateY(-10deg) rotateZ(0deg)}
+  87%{transform:translateX(-50%) translateY(0) rotateY(-24deg) rotateZ(0deg)}
+  100%{transform:translateX(-50%) translateY(0) rotateY(-18deg) rotateZ(0deg)}
 }
 @keyframes core-cw{
   0%,22%{transform:translate(-50%,-50%) rotate(0deg)}
@@ -137,55 +137,57 @@
   </aside>
  </div>
  <div class="boot-overlay" aria-hidden="true"><div class="boot-cross"></div><div class="boot-logo"><div class="boot-emblem"><b>DSH</b></div><div class="boot-top">SYSTEM BOOT SEQUENCE</div><div class="boot-name">全球智能协同系统</div><div class="boot-sub">DESIGNATED SYSTEM HUB &nbsp; / &nbsp; INITIALIZING</div></div><div class="boot-cli"><div class="cli-line active">DSH BOOTLOADER : START</div><div class="cli-line" id="bootCli2">ALLOCATING WORLD MATRIX</div><div class="cli-line" id="bootCli3">PREPARING AUTHORIZATION BUS</div></div><div class="boot-serial">DSH/BOOTSTRAP/01<br/>PROTO / DS-0426<br/>CHECKSUM : 7A:5C:11<br/>FRAME : 001 / 128</div></div>
- <div class="auth-overlay"><div class="auth-head"><div class="kicker">DSH / OPERATIONS CONTROL</div><div class="main">总控制中心</div><div class="sub">启动授权协议</div><div class="hatch"></div></div><div class="hex-column left" id="hexLeft"></div><div class="hex-column right" id="hexRight"></div><div class="auth-console" id="authConsole"><div class="cmd">DSH://ACCESS_CORE</div><div class="cmd">AUTHORIZING CONTROL CHANNEL</div><div class="cmd">KEY CHAIN [C1/B8/U9/L3]</div><div class="cmd active" id="authLine">CLICK AUTHORIZATION UNLOCK</div></div><button class="auth-unlock waiting" id="authUnlock" type="button">点 击 授 权 解 锁</button><div class="auth-keys" aria-label="四级机械授权锁"><svg class="auth-vectors" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+ <div class="auth-overlay"><div class="auth-head"><div class="kicker">DSH / OPERATIONS CONTROL</div><div class="main">总控制中心</div><div class="sub">启动授权协议</div><div class="hatch"></div></div><div class="hex-column left" id="hexLeft"></div><div class="hex-column right" id="hexRight"></div><div class="auth-console" id="authConsole"><div class="cmd">DSH://ACCESS_CORE</div><div class="cmd">AUTHORIZING CONTROL CHANNEL</div><div class="cmd">KEY CHAIN [C1/B8/U9/L3]</div><div class="cmd active" id="authLine">AUTHORIZATION PENDING</div></div><button class="auth-unlock waiting" id="authUnlock" type="button">授 权 解 锁</button><div class="auth-keys" aria-label="四级机械授权锁"><svg class="auth-vectors" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
  <defs>
   <linearGradient id="tnolar-metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#506b74"/><stop offset=".22" stop-color="#b3cac9"/><stop offset=".48" stop-color="#eaf9ed"/><stop offset=".72" stop-color="#7e989f"/><stop offset="1" stop-color="#38525b"/></linearGradient>
   <linearGradient id="tnolar-bow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d5f4ed"/><stop offset=".35" stop-color="#8ba8a9"/><stop offset=".75" stop-color="#3c565f"/><stop offset="1" stop-color="#aecbc8"/></linearGradient>
  </defs>
  <symbol id="tnolar-physical-key" viewBox="0 0 100 120">
-  <path d="M45 83V32H41V13L45 8H61V17H55V22H64V30H55V83Z" fill="url(#tnolar-metal)" stroke="#c0d8d4" stroke-width="1.2" stroke-linejoin="round"/>
-  <path d="M48 14V79M51 13V78" fill="none" stroke="#f4fff6" stroke-width="1.05" opacity=".55" stroke-linecap="round"/>
-  <path d="M61 17H54M63 30H54" stroke="#263b42" stroke-width="1.5" opacity=".7"/>
-  <path d="M45 79H55V89L60 91A19 19 0 1 1 40 91L45 89Z" fill="url(#tnolar-bow)" stroke="#e1eee7" stroke-width="1.5"/>
-  <circle cx="50" cy="99" r="9.2" fill="#071c24" stroke="#294550" stroke-width="2.5"/>
-  <path d="M37 95a14 14 0 0 1 9-9M63 105a14 14 0 0 1-8 8" fill="none" stroke="#effff4" stroke-width="1.1" opacity=".62" stroke-linecap="round"/>
- </symbol>
+  <path class="key-spine" d="M47 8C43 8 40 11 40 15V82c0 6 4 10 10 10s10-4 10-10V15c0-4-3-7-7-7Z" fill="url(#tnolar-metal)" stroke="#d7eeea" stroke-width="1.3"/>
+  <path d="M49 15V86" fill="none" stroke="#f7fff9" stroke-width="1.15" opacity=".62" stroke-linecap="round"/>
+  <path d="M44 16V85" fill="none" stroke="#304950" stroke-width="1.05" opacity=".55" stroke-linecap="round"/>
+  <path d="M56 17V83" fill="none" stroke="#20373e" stroke-width="1.1" opacity=".45" stroke-linecap="round"/>
+  <path d="M38 80h24M38 70h19M38 61h22M38 52h17" fill="none" stroke="#effff4" stroke-width="1.05" opacity=".30" stroke-linecap="round"/>
+  <ellipse cx="50" cy="101" rx="18" ry="11.5" fill="url(#tnolar-bow)" stroke="#e7f5ef" stroke-width="1.5"/>
+  <ellipse cx="50" cy="101" rx="8.2" ry="4.9" fill="#061920" stroke="#35545f" stroke-width="2.2"/>
+  <path class="key-side-flare" d="M37 97c5-4 21-4 26 0" fill="none" stroke="#f8fffb" stroke-width="1.1" opacity=".55" stroke-linecap="round"/>
+</symbol>
 </svg><div class="auth-key" id="key0">
   <div class="auth-code">C1</div>
-  <button class="lock-interact" type="button" aria-label="转动 C1 机械钥匙，启动授权流程" title="点击钥匙启动授权">
+  <button class="lock-interact" type="button" aria-label="C1 授权钥匙" title="C1">
     <span class="lock-casing" aria-hidden="true"><span class="lock-glint"></span></span>
     <span class="lock-core" aria-hidden="true"></span>
     <span class="key-rotor" aria-hidden="true"><svg class="key-metal" viewBox="0 0 100 120" focusable="false"><use href="#tnolar-physical-key"></use></svg></span>
     <span class="lock-led" aria-hidden="true"></span>
   </button>
-  <div class="auth-state" aria-live="polite">待命</div><div class="auth-hint">INSERT ↑ / TURN ↷</div>
+  <div class="auth-state" aria-live="polite">待命</div>
  </div><div class="auth-key" id="key1">
   <div class="auth-code">B8</div>
-  <button class="lock-interact" type="button" aria-label="转动 B8 机械钥匙，启动授权流程" title="点击钥匙启动授权">
+  <button class="lock-interact" type="button" aria-label="B8 授权钥匙" title="B8">
     <span class="lock-casing" aria-hidden="true"><span class="lock-glint"></span></span>
     <span class="lock-core" aria-hidden="true"></span>
     <span class="key-rotor" aria-hidden="true"><svg class="key-metal" viewBox="0 0 100 120" focusable="false"><use href="#tnolar-physical-key"></use></svg></span>
     <span class="lock-led" aria-hidden="true"></span>
   </button>
-  <div class="auth-state" aria-live="polite">待命</div><div class="auth-hint">INSERT ↑ / TURN ↷</div>
+  <div class="auth-state" aria-live="polite">待命</div>
  </div><div class="auth-key" id="key2">
   <div class="auth-code">U9</div>
-  <button class="lock-interact" type="button" aria-label="转动 U9 机械钥匙，启动授权流程" title="点击钥匙启动授权">
+  <button class="lock-interact" type="button" aria-label="U9 授权钥匙" title="U9">
     <span class="lock-casing" aria-hidden="true"><span class="lock-glint"></span></span>
     <span class="lock-core" aria-hidden="true"></span>
     <span class="key-rotor" aria-hidden="true"><svg class="key-metal" viewBox="0 0 100 120" focusable="false"><use href="#tnolar-physical-key"></use></svg></span>
     <span class="lock-led" aria-hidden="true"></span>
   </button>
-  <div class="auth-state" aria-live="polite">待命</div><div class="auth-hint">INSERT ↑ / TURN ↷</div>
+  <div class="auth-state" aria-live="polite">待命</div>
  </div><div class="auth-key" id="key3">
   <div class="auth-code">L3</div>
-  <button class="lock-interact" type="button" aria-label="转动 L3 机械钥匙，启动授权流程" title="点击钥匙启动授权">
+  <button class="lock-interact" type="button" aria-label="L3 授权钥匙" title="L3">
     <span class="lock-casing" aria-hidden="true"><span class="lock-glint"></span></span>
     <span class="lock-core" aria-hidden="true"></span>
     <span class="key-rotor" aria-hidden="true"><svg class="key-metal" viewBox="0 0 100 120" focusable="false"><use href="#tnolar-physical-key"></use></svg></span>
     <span class="lock-led" aria-hidden="true"></span>
   </button>
-  <div class="auth-state" aria-live="polite">待命</div><div class="auth-hint">INSERT ↑ / TURN ↷</div>
+  <div class="auth-state" aria-live="polite">待命</div>
  </div></div></div>
  <div class="ready-overlay" id="readyCard"><div class="ready-eyebrow">DSH // AUTHORIZATION GRANTED</div><div class="ready-brand">DSH</div><div class="ready-heading">请您指挥</div><div class="ready-desc">等待命令输入 &gt;_.....</div><div class="ready-detail"><span>WORLD MAP</span><span>CORE</span><span>PLUGINS</span></div><button class="enter-button" id="enterButton" type="button">点击进入控制台 / ENTER</button></div>
  <div class="node-detail" id="nodeDetail" aria-live="polite"><strong id="nodeTitle">N-01</strong><small>虚拟演示节点 · 非真实连接状态</small></div>
@@ -291,7 +293,7 @@
   $('progressInner').style.width=pct+'%';$('progressPct').textContent=String(pct).padStart(3,'0')+'%';$('progressOuter').setAttribute('aria-valuenow',String(pct));
   const s=displayElapsed/1000;const hh='00',mm='00',ss=String(Math.floor(s)).padStart(2,'0'),ddd=String(Math.floor(displayElapsed%1000)).padStart(3,'0');$('clock').textContent=hh+':'+mm+':'+ss+'.'+ddd;
   $('topState').textContent=phase==='boot'?'BOOTSTRAP':phase==='map'?'SCANNING':phase==='auth'?(authTriggered?'AUTHORIZING':'AWAITING AUTHORIZATION'):'SYSTEM ONLINE';
-  $('currentAction').textContent=phase==='boot'?'引导程序初始化':phase==='map'?'世界矩阵 / 节点扫描':phase==='auth'?(authTriggered?'系统认证 / 密钥解锁中':'等待用户点击授权解锁'):'控制台就绪 / 等待指令';
+  $('currentAction').textContent=phase==='boot'?'引导程序初始化':phase==='map'?'世界矩阵 / 节点扫描':phase==='auth'?(authTriggered?'授权中':'等待授权'):'控制台就绪 / 等待指令';
   $('bootCli2').classList.toggle('active',displayElapsed>730);$('bootCli3').classList.toggle('active',displayElapsed>1300);
   const nodeCount=Math.min(NETWORK_NODES.length,Math.max(0,Math.floor((displayElapsed-CONFIG.phaseMap)/340)));$('nodeCount').textContent=String(nodeCount).padStart(2,'0');
   const mapPct=displayElapsed<CONFIG.phaseMap?0:Math.min(100,Math.floor((Math.min(displayElapsed,CONFIG.phaseAuth)-CONFIG.phaseMap)/((CONFIG.phaseAuth-CONFIG.phaseMap)/100)));$('mapPercentage').textContent=String(mapPct).padStart(2,'0');
@@ -300,9 +302,9 @@
   $('busState').textContent=displayElapsed>=3850?'ONLINE':'STARTING';$('agentState').textContent=displayElapsed>=5250?'READY':'SYNCING';$('pluginState').textContent=displayElapsed>=8650?'ACTIVE':'WAITING';$('securityState').textContent=displayElapsed>=9680?'GRANTED':'LOCKED';$('securityState').className=displayElapsed>=9680?'ok':'red';
   let lines=Math.min(logs.length,Math.max(1,Math.floor((Math.min(displayElapsed,CONFIG.phaseAuth)-1500)/1150)+1));$('terminalLog').innerHTML=logs.slice(Math.max(0,lines-7),lines).map(line=>'<div class="log-line">'+line+'</div>').join('');
   const gateLead=690;
-  for(let i=0;i<4;i++){let gateAt=CONFIG.gates[i];let r=displayElapsed>=gateAt;let turning=authTriggered && !r && displayElapsed>=gateAt-gateLead;let key=$('key'+i);key.classList.toggle('turning',turning);key.classList.toggle('unlocked',r);key.querySelector('.auth-state').textContent=r?'已解锁':(turning?'逆时针转动':'待命')}
-  $('authLine').textContent=displayElapsed>=9680?'AUTHORIZATION GRANTED':displayElapsed>=9400?'FINALIZING KEY EXCHANGE':displayElapsed>=8050?'HANDSHAKE ACCEPTED':authTriggered?'TURNING KEY CHAIN':'CLICK AUTHORIZATION UNLOCK';
-  $('authUnlock').textContent=displayElapsed>=9680?'权 限 已 确 认':authTriggered?'机械密钥逆时针解锁中':'点 击 授 权 解 锁';
+  for(let i=0;i<4;i++){let gateAt=CONFIG.gates[i];let r=displayElapsed>=gateAt;let turning=authTriggered && !r && displayElapsed>=gateAt-gateLead;let key=$('key'+i);key.classList.toggle('turning',turning);key.classList.toggle('unlocked',r);key.querySelector('.auth-state').textContent=r?'已解锁':'锁定'}
+  $('authLine').textContent=displayElapsed>=9680?'AUTHORIZATION GRANTED':displayElapsed>=9400?'FINALIZING KEY EXCHANGE':displayElapsed>=8050?'HANDSHAKE ACCEPTED':authTriggered?'AUTHORIZATION IN PROGRESS':'AUTHORIZATION PENDING';
+  $('authUnlock').textContent=displayElapsed>=9680?'权 限 已 确 认':authTriggered?'授 权 中':'授 权 解 锁';
   $('authUnlock').classList.toggle('waiting',!authTriggered && phase==='auth');$('authUnlock').classList.toggle('arming',authTriggered && phase==='auth');$('authUnlock').classList.toggle('done',displayElapsed>=9680);$('authUnlock').disabled=authTriggered;document.querySelectorAll('.lock-interact').forEach(lock=>{lock.disabled=authTriggered});
   if(displayElapsed>=CONFIG.phaseReady && !finished){finished=true;running=false;if(notify)window.dispatchEvent(new CustomEvent('dsh:startup-complete',{detail:{duration:displayElapsed,simulation:true}}))}
  }

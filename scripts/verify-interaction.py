@@ -18,7 +18,9 @@ with sync_playwright() as p:
     frame.evaluate('''() => { window.DSHStartup.seek(6349); window.DSHStartup.play(); }''')
     frame.wait_for_function('document.getElementById("stage").dataset.phase === "auth"')
     frame.wait_for_timeout(250)
-    assert '点 击 授 权 解 锁' in frame.locator('#authUnlock').inner_text()
+    assert frame.locator('#authUnlock').inner_text() == '授 权 解 锁'
+    assert frame.locator('.auth-hint').count() == 0
+    assert frame.locator('#authLine').inner_text() == 'AUTHORIZATION PENDING'
     assert frame.locator('.auth-key.unlocked').count() == 0
     assert frame.locator('#authUnlock').is_enabled()
     assert frame.evaluate('''() => !!Array.from(document.styleSheets).flatMap(s => { try {return Array.from(s.cssRules)} catch { return [] } }).find(r => r.name === 'key-insert-cw')''')
@@ -32,17 +34,19 @@ with sync_playwright() as p:
     print('layout',rects)
     assert rects['button']['bottom']+10 < rects['keys']['top'], 'Authorization button collides with keys'
     frame.locator('body').screenshot(path=str(ROOT/'docs/preview-tnolar-auth.png'))
+    startTransform = frame.evaluate("() => getComputedStyle(document.querySelector('#key0 .key-rotor')).transform")
     frame.locator('#key0 .lock-interact').click() # physical key may start authorization directly
     frame.wait_for_timeout(535)
     assert frame.locator('.auth-key.turning').count() >= 1, 'Turning animation was not triggered'
-    rotation = frame.evaluate('''() => { const m = new DOMMatrix(getComputedStyle(document.querySelector('#key0 .key-rotor')).transform); return Math.atan2(m.b,m.a)*180/Math.PI }''')
-    print('clockwise rotation at 535ms',rotation)
-    assert rotation > 15, f'Key was not turning clockwise: {rotation}'
+    midTransform = frame.evaluate("() => getComputedStyle(document.querySelector('#key0 .key-rotor')).transform")
+    print('key transform start/mid', startTransform, midTransform)
+    assert midTransform != startTransform, f'Key was not axially twisting: start={startTransform}, now={midTransform}'
     frame.locator('body').screenshot(path=str(ROOT/'docs/preview-tnolar-keyturn.png'))
     frame.wait_for_function('document.getElementById("stage").dataset.phase === "ready"',timeout=8000)
     assert frame.locator('.auth-key.unlocked').count() == 4
-    finalRotation = frame.evaluate('''() => { const m = new DOMMatrix(getComputedStyle(document.querySelector('#key0 .key-rotor')).transform); return Math.atan2(m.b,m.a)*180/Math.PI }''')
-    assert abs(finalRotation-90) < 1, f'Final key angle should be 90 degrees, got {finalRotation}'
+    assert '密钥沿轴' not in frame.locator('body').inner_text()
+    finalTransform = frame.evaluate("() => getComputedStyle(document.querySelector('#key0 .key-rotor')).transform")
+    assert finalTransform != startTransform, f'Final key transform should differ from initial, got {finalTransform}'
     frame.wait_for_selector('#readyCard', state='visible', timeout=3000)
     assert frame.locator('.ready-heading').text_content() == '请您指挥'
     assert '等待命令输入' in frame.locator('.ready-desc').inner_text()
