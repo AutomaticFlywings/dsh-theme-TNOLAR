@@ -39,7 +39,20 @@ with sync_playwright() as p:
     frame.wait_for_timeout(535)
     assert frame.locator('.auth-key.turning').count() >= 1, 'Turning animation was not triggered'
     midTransform = frame.evaluate("() => getComputedStyle(document.querySelector('#key0 .key-rotor')).transform")
-    print('key transform start/mid', startTransform, midTransform)
+    # The key shaft AND the lock-slot must rotate about the same longitudinal
+    # Y axis, with identical phase/angle; a Z-spin of the slot is a regression.
+    yaw = frame.evaluate('''() => {
+      const matrixYaw = value => {
+        const m = new DOMMatrixReadOnly(value);
+        return Math.atan2(-m.m13,m.m11)*180/Math.PI;
+      };
+      return {
+        key:matrixYaw(getComputedStyle(document.querySelector('#key0 .key-rotor')).transform),
+        slot:matrixYaw(getComputedStyle(document.querySelector('#key0 .lock-core'),'::before').transform),
+      };
+    }''')
+    print('key/lock slot axial yaw at 535ms', yaw)
+    assert abs(yaw['key']-yaw['slot']) < 3, f'Key and lock slot were not synchronized: {yaw}'
     assert midTransform != startTransform, f'Key was not axially twisting: start={startTransform}, now={midTransform}'
     frame.locator('body').screenshot(path=str(ROOT/'docs/preview-tnolar-keyturn.png'))
     frame.wait_for_function('document.getElementById("stage").dataset.phase === "ready"',timeout=8000)

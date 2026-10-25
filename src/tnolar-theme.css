@@ -42,6 +42,32 @@ html[data-tnolar-theme="1"] :is(body, #root) {
   --dsw-alias-label-caption: #7499a1 !important;
   --dsw-alias-label-dimmed: #62858f !important;
   --dsw-alias-label-primary-bluish: #b2f6ed !important;
+  /* DSH's markdown and selector tokens are separate from background tokens.
+   * Without these a light-profile token sheet leaves code pills white. */
+  --dsw-alias-markdown-inline-code: #173641 !important;
+  --dsw-alias-markdown-code-block: #0a2029 !important;
+  --dsw-alias-markdown-code-block-banner: #14323b !important;
+  --dsw-alias-markdown-code-segment-selected: #1d4c56 !important;
+  --dsw-alias-markdown-code-segment-unselected: #10323c !important;
+  --dsw-alias-link: #7ee8dd !important;
+  --dsw-specific-selector: #183c47 !important;
+  --dsw-specific-menu: #0d2731 !important;
+  --dsw-alias-menu-icon: #c4e5df !important;
+  --dsw-alias-label-primary-dimmed: #9dbebf !important;
+  /* DSH uses separate CSS-variable palettes for highlighted fenced code.
+   * A light host profile retains dark syntax colors even when we darken the
+   * surrounding interface; explicitly select the dark code palette here. */
+  --shiki-foreground: #e2f1ed !important;
+  --shiki-background: #0a2029 !important;
+  --shiki-token-constant: #7bd2ff !important;
+  --shiki-token-string: #8ae6aa !important;
+  --shiki-token-comment: #a4b7c0 !important;
+  --shiki-token-keyword: #ffa5c4 !important;
+  --shiki-token-parameter: #ffc07b !important;
+  --shiki-token-function: #c1b0ff !important;
+  --shiki-token-string-expression: #8ae6aa !important;
+  --shiki-token-punctuation: #c8dce0 !important;
+  --shiki-token-link: #8ad7ff !important;
   --dsw-alias-button-primary-fill: #126c70 !important;
   --dsw-alias-button-primary-hover: #20888c !important;
   --dsw-alias-button-info-fill: #177b7c !important;
@@ -216,9 +242,6 @@ html[data-tnolar-theme="1"] #root [class*="tabActive"] {
   color: #c9fff4;
   text-shadow: 0 0 12px rgba(95,225,218,.17);
 }
-html[data-tnolar-theme="1"] #root [class*="tabActive"] {
-  border-bottom-color: #6fe6da;
-}
 html[data-tnolar-theme="1"] #root [class*="headerUtilities"] button,
 html[data-tnolar-theme="1"] #root [class*="headerCorner"] button {
   border-radius: 5px;
@@ -331,31 +354,22 @@ html[data-tnolar-theme="1"] #root * { scrollbar-color: #355a62 transparent; }
 }
 
 
-/* Input accessories and small action chips: remove the remaining light/default
- * surfaces in the composer bay and plugin/category selectors. */
-html[data-tnolar-theme="1"] #root [class*="InputBar_card"] :is(button,[role="button"]):not([class*="InputBar_primary"]) {
-  border: 1px solid rgba(101, 193, 192, .42);
-  background: linear-gradient(180deg, rgba(17,54,64,.92), rgba(10,33,41,.94));
-  color: #d9f6f0;
-  box-shadow: inset 0 1px rgba(135,235,225,.07), 0 0 0 1px rgba(22,83,88,.18);
-}
-html[data-tnolar-theme="1"] #root [class*="InputBar_card"] :is(button,[role="button"]):not([class*="InputBar_primary"]):hover {
-  background: linear-gradient(180deg, rgba(25,73,82,.96), rgba(13,42,49,.96));
-  border-color: rgba(122, 229, 220, .62);
-}
-html[data-tnolar-theme="1"] #root :is([role="tab"],[class*="chip"],[class*="Chip"],[class*="pill"],[class*="Pill"],[class*="segmentedItem"],[class*="modeSwitch"]):is([aria-selected="true"],[data-state="active"],[aria-pressed="true"],[data-active="true"]) {
+/* Accent on chip-like controls only. Never touch tabs' native geometry:
+ * ConversationRoot draws the active tab line with ::after, not border-bottom. */
+html[data-tnolar-theme="1"] #root :is([class*="chip"],[class*="Chip"],[class*="pill"],[class*="Pill"],[class*="segmentedItem"],[class*="modeSwitch"]):is([aria-selected="true"],[data-state="active"],[aria-pressed="true"],[data-active="true"]) {
   background: linear-gradient(90deg, rgba(27,92,100,.88), rgba(16,46,56,.92)) !important;
   border-color: rgba(123,240,225,.66) !important;
   color: #effffb !important;
   box-shadow: inset 2px 0 #82f4e5, 0 0 16px rgba(56,193,185,.14);
 }
-html[data-tnolar-theme="1"] #root :is([role="tab"],[class*="chip"],[class*="Chip"],[class*="pill"],[class*="Pill"],[class*="segmentedItem"],[class*="modeSwitch"]) {
+html[data-tnolar-theme="1"] #root :is([class*="chip"],[class*="Chip"],[class*="pill"],[class*="Pill"],[class*="segmentedItem"],[class*="modeSwitch"]) {
   border-radius: 999px;
 }
 
 /* Menus and popovers: replace low-contrast grey sheets with TNOLAR panels. */
 html[data-tnolar-theme="1"] body :is([role="menu"],[role="listbox"],[class*="menuContent"],[class*="Menu_content"],[class*="dropdownContent"],[class*="popoverContent"],[class*="Popper_content"]) {
-  background: linear-gradient(180deg, rgba(11,36,44,.98), rgba(7,22,29,.98)) !important;
+  background-color: #0b242c !important;
+  background-image: linear-gradient(180deg, #0b242c, #07161d) !important;
   color: #e4f4f0 !important;
   border: 1px solid rgba(108, 199, 197, .48) !important;
   border-radius: 12px !important;
@@ -377,19 +391,88 @@ html[data-tnolar-theme="1"] body :is([role="menuitem"],[role="option"],[class*="
 }
 
 
-/* Force upload / attachment controls inside the composer to inherit the TNOLAR
- * icon palette as well; some DSH variants render these icons with hardcoded
- * light fills unless svg descendants are explicitly themed. */
-html[data-tnolar-theme="1"] #root [class*="InputBar_card"] :is(button,[role="button"],[class*="upload"],[class*="attach"],[aria-label*="上传"],[title*="上传"]) {
-  color: #dffcf6 !important;
+/* DSH source: ui-conversation/InputBar.module.css .add and .primary.
+ * Prefer dark controls with light icons. CSS-module class targeting is needed
+ * because the screenshot's plus is the commands button, not an upload input.
+ * Never force SVG fill or stroke: outline icons use fill="none" natively. */
+html[data-tnolar-theme="1"] #root button[class*="InputBar_add"] {
+  background: #183e49 !important;
+  border: 1px solid #568d92 !important;
+  color: #eafbf8 !important;
+  opacity: 1 !important;
+  border-radius: 8px !important;
+  box-shadow: inset 0 1px 0 rgba(208,254,247,.10), 0 2px 5px rgba(0,0,0,.24) !important;
 }
-html[data-tnolar-theme="1"] #root [class*="InputBar_card"] :is(button,[role="button"],[class*="upload"],[class*="attach"],[aria-label*="上传"],[title*="上传"]) :is(svg,path,rect,circle,line,polyline,polygon) {
-  color: #dffcf6 !important;
-  fill: currentColor !important;
-  stroke: currentColor !important;
+html[data-tnolar-theme="1"] #root button[class*="InputBar_add"]:not(:disabled):hover {
+  background: #215564 !important;
+  border-color: #89e9dd !important;
 }
-html[data-tnolar-theme="1"] #root [class*="InputBar_card"] :is(button,[role="button"],[class*="upload"],[class*="attach"],[aria-label*="上传"],[title*="上传"]):hover :is(svg,path,rect,circle,line,polyline,polygon) {
-  color: #ffffff !important;
-  fill: currentColor !important;
-  stroke: currentColor !important;
+html[data-tnolar-theme="1"] #root button[class*="InputBar_add"]:disabled {
+  background: #112c37 !important;
+  border-color: #416b73 !important;
+  color: #aeced0 !important;
+  opacity: 1 !important;
+  cursor: not-allowed;
+}
+html[data-tnolar-theme="1"] #root button[class*="InputBar_primary"] {
+  background: #185462 !important;
+  border: 1px solid #3f8690 !important;
+  color: #f2fffc !important;
+  opacity: 1 !important;
+  box-shadow: inset 0 1px 0 rgba(211,254,246,.09), 0 3px 8px rgba(0,0,0,.27) !important;
+  border-radius: 8px !important;
+}
+html[data-tnolar-theme="1"] #root button[class*="InputBar_primary"]:not(:disabled):hover {
+  background: #237384 !important;
+  border-color: #95f5e7 !important;
+  box-shadow: 0 0 0 2px rgba(86,216,206,.14), 0 4px 10px rgba(0,0,0,.27) !important;
+}
+html[data-tnolar-theme="1"] #root button[class*="InputBar_primary"]:disabled {
+  background: #113441 !important;
+  border-color: #315e68 !important;
+  color: #accdd0 !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+}
+/* Other DSH upload launchers inherit from semantic tokens; only label-known
+ * controls get overrides so unrelated buttons cannot be painted accidentally. */
+html[data-tnolar-theme="1"] #root button:is([aria-label*="上传文件"],[aria-label*="添加附件"],[title*="上传文件"]) {
+  background: #183e49 !important;
+  border: 1px solid #568d92 !important;
+  color: #eafbf8 !important;
+}
+
+/* Actual rendered markdown: the token above handles most cases, while this
+ * class-scoped fallback covers DSH versions with hardcoded inline-code fill.
+ * Do not change font, display, padding or line box: these are DSH-owned. */
+html[data-tnolar-theme="1"] #root [class*="MarkdownText_markdown"] :not(pre) > code {
+  background: #173641 !important;
+  background-image: none !important;
+  color: #e0f8f2 !important;
+  border-color: #426d75 !important;
+  text-shadow: none !important;
+}
+html[data-tnolar-theme="1"] #root [class*="MarkdownText_markdown"] :not(pre) > code :is(a,button) {
+  background: transparent !important;
+  color: #92f2e6 !important;
+}
+html[data-tnolar-theme="1"] #root [class*="MarkdownText_markdown"] pre code {
+  background: transparent !important;
+  border: none !important;
+  color: inherit;
+}
+/* Rendered fenced snippets inherit the dedicated dark code surface token. */
+html[data-tnolar-theme="1"] #root [class*="CodeCard"] {
+  --dsw-alias-markdown-code-block: #0a2029;
+  --dsw-alias-markdown-code-block-banner: #14323b;
+}
+
+/* DSH ConversationRoot uses .tab::after for its indicator and -10px hit-area
+ * margins for alignment. Only recolor its pseudo-element; no box changes. */
+html[data-tnolar-theme="1"] #root [class*="ConversationRoot_tabActive"] {
+  color: #aaf5eb !important;
+}
+html[data-tnolar-theme="1"] #root [class*="ConversationRoot_tabActive"]::after {
+  background: #76e9db !important;
 }

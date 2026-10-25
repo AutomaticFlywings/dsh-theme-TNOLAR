@@ -7,6 +7,15 @@
 ![TNOLAR 战略终端风格（模拟 DSH 宿主预览）](docs/preview-tnolar-theme.svg)
 
 <details>
+<summary>查看 v0.5.5 深色代码、输入控件和标签对比度回归截图</summary>
+
+![TNOLAR v0.5.5 颜色回归测试](docs/preview-tnolar-contrast.png)
+
+> 这张截图由浏览器中的**模拟 DSH 组件**自动生成，用于回归测试；不代表已在真实 DSH 上完成验收。
+
+</details>
+
+<details>
 <summary>查看世界地图启动动画预览</summary>
 
 ![9 个首都 / 14 条链路的启动动画](docs/preview-tnolar-map.svg)
@@ -23,11 +32,13 @@
 - **9 个首都，14 条路线**：已删除巴黎与其他多余连接，节点坐标按真实经纬度投影，曲线路径是动画示意。
 - **可独立启停**：启动动画与主界面主题可分别开关，支持重播、跳过、交互授权、显式进入控制台；插件卸载时撤销样式和遮罩。
 - **无需联网资源**：内置 HTML/SVG/CSS/JS；动画使用限制脚本权限的 sandbox iframe，不读取会话内容，不调用 SSH 或 Agent。
+- **v0.5.5 视觉可读性专项修复**：从 DSH 上游组件源码确认 Markdown 行内代码、代码块、Shiki 语法高亮、上传/命令按钮和发送按钮分别使用独立颜色 token。统一为深底高对比度文字 / 图标，移除 SVG 强制实心填充、撤销全局 tab 几何覆盖；补充浏览器对比度测试和标签坐标验证。
+- **v0.5.5 钥匙联动补丁**：钥匙与锁孔内部槽口同步执行相同 Y 轴角度的转动，外壳保持固定，取消此前锁芯绕屏幕法线单独转动的问题。
 - **v0.5.3 细节修复**：输入区上传/附件图标跟随 TNOLAR 深色主题；授权钥匙改用细边视角，绕自身长轴执行 3D 扭转，而非在屏幕平面内转圈。
 - **v0.5.2 拟物机械钥匙**：首次加入金属钥匙与锁芯动画，可点主按钮或任一钥匙启动四级解锁。
 - **v0.5.0 交互与细节增强**：授权流程支持点击触发与密钥转动动画，待命文案更新，并继续保留 v0.4.1 对 classic-script 启动兼容性的修复。
 
-> **兼容性说明**：已经完成打包检查、9 节点/14 链路测试和带模拟 DSH DOM 的浏览器烟雾测试；尚未在所有真实 DSH 安装与桌面环境上逐一验证。建议首次在独立 profile 中测试。v0.4.1 已通过 DSH classic-script 协议模拟测试，但仍需在真实 DSH 环境验证。GitHub README 的 SVG 预览为示意插画，非实际 DSH 运行截图；本地浏览器模拟测试另有 PNG 预览。
+> **兼容性说明**：已经完成打包检查、9 节点/14 链路测试和带模拟 DSH DOM 的浏览器烟雾测试；尚未在所有真实 DSH 安装与桌面环境上逐一验证。建议首次在独立 profile 中测试。v0.4.1 已通过 DSH classic-script 协议模拟测试，但仍需在真实 DSH 环境验证。GitHub README 的首张 SVG 预览为示意插画，非实际 DSH 运行截图；v0.5.5 提供浏览器模拟组件的 PNG 对比度测试预览。
 
 ## 安装
 
@@ -73,7 +84,7 @@ dsh --profile web
 
 ```bash
 # 在下载了相应 tgz 的目录中执行
-dsh plugin --profile web add "./dsh-theme-tnolar-0.5.3.tgz"
+dsh plugin --profile web add "./dsh-theme-tnolar-0.5.5.tgz"
 
 # 卸载后重启 DSH Web
 dsh plugin --profile web remove dsh-theme-tnolar
@@ -91,7 +102,7 @@ dsh plugin --profile web remove dsh-theme-tnolar
 | 顶部标题栏 | 指挥台式分区、线形高亮、统一标签页 | `ConversationRoot` |
 | 聊天输入区 | 13px 角半径、四角定位标记、青色焦点外发光 | `InputBar` |
 | 按钮和状态 | 5–8px 小圆角、发光 hover、清晰键盘焦点 | DSH 控件与语义状态 token |
-| 代码显示 | 等宽字体、低对比背景、细边界 | 通用代码块 |
+| 代码显示 | 等宽字体、深色代码底板、高对比 Shiki 高亮、细边界 | `MarkdownText` / `CodeCard` |
 
 核心色板：背景 `#06131B`、侧栏 `#071820`、面板 `#0B2029`、青绿信号 `#6BE5DA`、文字 `#E2F1ED`、警告 `#DFB873`、错误 `#EE8187`。这些色值都可以在 [src/tnolar-theme.css](src/tnolar-theme.css) 修改。
 
@@ -192,6 +203,7 @@ npm pack --dry-run
 ```bash
 python scripts/verify-browser.py
 python scripts/verify-interaction.py
+python scripts/verify-contrast.py     # 检查代码、菜单、加号/发送按钮、标签布局对比度
 ```
 
 每次修改 `src/client.template.js`、`src/tnolar-theme.css` 或 `assets/world-startup.html` 后，请先执行 `npm run build`，并将更新后的 `lib/client.js` 一起提交。`lib/index.js` 是 Host 侧 ESM，`lib/client.js` 则必须是 classic-script；两者的打包方式不能混用。仓库里的 CI 在 push 和 PR 时验证构建、静态规则与安装包组成，但 **不能代替在真实 DSH 环境安装测试**。

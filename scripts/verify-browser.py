@@ -68,7 +68,7 @@ with sync_playwright() as p:
     assert values['selectedColor'].startswith('linear-gradient')
     assert 'inset' in values['selectedInset']
     assert values['cardRadius']=='13px'
-    assert values['buttonRadius']=='6px'
+    assert values['buttonRadius']=='8px'
     assert values['headerBg'].startswith('linear-gradient')
     page.screenshot(path=str(ROOT/'docs/preview-tnolar-theme.png'),full_page=True)
     # Confirm immediate disable / re-enable, and destruction roll back the theme.

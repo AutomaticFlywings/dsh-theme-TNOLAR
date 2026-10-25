@@ -1,4 +1,4 @@
-# TNOLAR UI 设计规范（v0.4.0）
+# TNOLAR UI 设计规范（v0.5.5）
 
 本文件阐述主题针对 **DeepSeek Harness Web** 的视觉规则及风险边界。所有新增外观由 `src/tnolar-theme.css` 维护，不修改 DSH 宿主源码。
 
@@ -43,3 +43,11 @@ DSH 使用 CSS Modules；本主题的辅助规则按类名包含的稳定组件�
 ## 预览性质
 
 `docs/preview-tnolar-theme.png` 使用 `test/fixture-dsh-mock.html` 生成，为模拟 DSH 页面。具体组件结构和主题变量为真实上游 DSH 代码参考，但**不代表实机的每个交互都已验证**。
+
+## v0.5.5：代码和输入区颜色审计
+
+- DSH 的 Markdown 行内代码使用 `--dsw-alias-markdown-inline-code`，与页面背景 token 独立；这里将它固定为 `#173641`，文字为 `#E0F8F2`。代码块 `--dsw-alias-markdown-code-block` 固定深色 `#0A2029`。
+- Shiki 高亮使用单独的 `--shiki-token-*`，在浅色 profile + 强制深色 TNOLAR 主题组合中必须显式切换为深色语法配色，否则可能出现深色背景上的深色高亮文本。
+- DSH 的 `InputBar.add` 为**命令菜单加号按钮**，不是文件上传 `<input>` 本身。使用深色 `#183E49` 底板和亮色轮廓，不覆盖 SVG 内部 `fill="none"`。发送按钮启用色为 `#185462`，禁用色为 `#113441`，禁用箭头清晰但弱于启用态。
+- `ConversationRoot` 激活标签的横线由 `.tab::after` 绘制；主题不修改原始布局与点击区域，仅重配颜色。
+- 浏览器组件回归使用 `test/fixture-theme-contrast.html` 和 `scripts/verify-contrast.py`，在模拟 DSH Light Token 残留场景下做 CSS 计算属性测量及前景背景对比度测试，截图见 `docs/preview-tnolar-contrast.png`。此测试**不是**真实 DSH 实机验证。

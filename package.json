@@ -1,7 +1,7 @@
 {
   "name": "dsh-theme-tnolar",
-  "version": "0.5.3",
-  "description": "DSH TNOLAR strategic terminal theme with axial key-twist startup unlock animation",
+  "version": "0.5.5",
+  "description": "TNOLAR strategic DSH theme: high-contrast Markdown, composer controls and terminal startup",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {

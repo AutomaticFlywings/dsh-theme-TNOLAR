@@ -37,6 +37,11 @@ for(const selector of ['sessionRow','panelRow','titleRow','InputBar_card','Input
  assert.ok(themeCss.includes(selector),`Missing styled DSH component: ${selector}`);
 }
 assert.match(themeCss, /--dsw-alias-bg-base/);
+assert.match(themeCss, /--dsw-alias-markdown-inline-code/);
+assert.match(themeCss, /--shiki-token-comment/);
+assert.match(themeCss, /button\[class\*=\"InputBar_add\"\]/);
+assert.doesNotMatch(themeCss, /fill:\s*currentColor\s*!important/, 'Do not force SVG fill on outline icons');
+assert.doesNotMatch(themeCss, /#root \[role=\"tab\"\] \{/, 'Do not modify DSH tab layout globally');
 assert.match(themeCss, /--dsw-radius-md/);
 assert.match(themeCss, /data-tnolar-theme/);
 assert.match(client, /function createOverlay\(/);
@@ -55,7 +60,8 @@ assert.equal((routeMatch[1].match(/\['C-\d{2}','C-\d{2}'\]/g)||[]).length,14);
 assert.match(html, /CAPITAL MESH 09 NODES · 14 LINKS/);
 assert.match(html, /@keyframes key-insert-cw\{/);
 assert.match(html, /@keyframes core-cw\{/);
-assert.match(html, /rotate\(90deg\)/);
+assert.match(html, /rotateY\(-2deg\)/);
+assert.match(html, /\.auth-key\.turning \.lock-core::before\{animation:core-cw/);
 assert.equal((html.match(/class="lock-interact"/g) || []).length,4);
 assert.match(html, /id="tnolar-physical-key"/);
 assert.match(html, /@keyframes unlock-pulse\{/);
