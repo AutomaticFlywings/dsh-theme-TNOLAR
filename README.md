@@ -16,6 +16,15 @@
 </details>
 
 <details>
+<summary>查看 v0.5.6 机械钥匙“插入 → 卡位 → 长轴旋转”的动态预览</summary>
+
+![TNOLAR 机械钥匙插入与同步解锁动画](docs/preview-tnolar-key-motion.gif)
+
+> 展示的是浏览器中的启动动画源文件实录，保留四级授权的真实时序。实际 DSH 显示取决于设备与浏览器渲染性能。
+
+</details>
+
+<details>
 <summary>查看世界地图启动动画预览</summary>
 
 ![9 个首都 / 14 条链路的启动动画](docs/preview-tnolar-map.svg)
@@ -32,6 +41,7 @@
 - **9 个首都，14 条路线**：已删除巴黎与其他多余连接，节点坐标按真实经纬度投影，曲线路径是动画示意。
 - **可独立启停**：启动动画与主界面主题可分别开关，支持重播、跳过、交互授权、显式进入控制台；插件卸载时撤销样式和遮罩。
 - **无需联网资源**：内置 HTML/SVG/CSS/JS；动画使用限制脚本权限的 sandbox iframe，不读取会话内容，不调用 SSH 或 Agent。
+- **v0.5.6 动画节奏恢复**：用户点击授权后，金属钥匙先从锁芯下方明显向上插入、卡位，再围绕长轴扭转并回弹，锁孔槽口同步变化；保留 v0.5.5 全套高对比度 UI。
 - **v0.5.5 视觉可读性专项修复**：从 DSH 上游组件源码确认 Markdown 行内代码、代码块、Shiki 语法高亮、上传/命令按钮和发送按钮分别使用独立颜色 token。统一为深底高对比度文字 / 图标，移除 SVG 强制实心填充、撤销全局 tab 几何覆盖；补充浏览器对比度测试和标签坐标验证。
 - **v0.5.5 钥匙联动补丁**：钥匙与锁孔内部槽口同步执行相同 Y 轴角度的转动，外壳保持固定，取消此前锁芯绕屏幕法线单独转动的问题。
 - **v0.5.3 细节修复**：输入区上传/附件图标跟随 TNOLAR 深色主题；授权钥匙改用细边视角，绕自身长轴执行 3D 扭转，而非在屏幕平面内转圈。
@@ -84,7 +94,7 @@ dsh --profile web
 
 ```bash
 # 在下载了相应 tgz 的目录中执行
-dsh plugin --profile web add "./dsh-theme-tnolar-0.5.5.tgz"
+dsh plugin --profile web add "./dsh-theme-tnolar-0.5.6.tgz"
 
 # 卸载后重启 DSH Web
 dsh plugin --profile web remove dsh-theme-tnolar

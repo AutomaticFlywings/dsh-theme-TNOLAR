@@ -1,7 +1,7 @@
 {
   "name": "dsh-theme-tnolar",
-  "version": "0.5.5",
-  "description": "TNOLAR strategic DSH theme: high-contrast Markdown, composer controls and terminal startup",
+  "version": "0.5.6",
+  "description": "TNOLAR military terminal DSH theme with high-contrast UI and visible insert-seat-axial-twist mechanical authorization",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {
