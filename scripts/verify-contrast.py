@@ -49,6 +49,9 @@ with sync_playwright() as p:
         addSvg:{pathFill:css('#add-button svg path').fill,pathStroke:css('#add-button svg path').stroke},
         disabled:{bg:css('#send-disabled').backgroundColor,color:css('#send-disabled').color,opacity:css('#send-disabled').opacity},
         enabled:{bg:css('#send-enabled').backgroundColor,color:css('#send-enabled').color,opacity:css('#send-enabled').opacity},
+        scroll:{bg:css('#to-bottom').backgroundColor,color:css('#to-bottom').color,opacity:css('#to-bottom').opacity},
+        category:{bg:css('#category-idle').backgroundColor,color:css('#category-idle').color},
+        selectedCategory:{bg:css('#category-active').backgroundColor,color:css('#category-active').color},
         menu:{bg:css('#menu').backgroundColor,color:css('#menu').color},
         tab:rect(document.querySelector('#tab-active')),list:rect(document.querySelector('[role=tablist]')),
         tabAfterBg:getComputedStyle(document.querySelector('#tab-active'),'::after').backgroundColor,
@@ -56,9 +59,9 @@ with sync_playwright() as p:
         shikiComment:css('#root').getPropertyValue('--shiki-token-comment').trim(),
       };
     }''')
-    pairs={k:contrast(results[k]['color'],results[k]['bg']) for k in ['code','codeBlock','add','disabled','enabled','menu']}
+    pairs={k:contrast(results[k]['color'],results[k]['bg']) for k in ['code','codeBlock','add','disabled','enabled','menu','scroll','category','selectedCategory']}
     results['ratios']=pairs
-    assert all(pairs[k]>=4.5 for k in ['code','codeBlock','add','enabled','menu']),pairs
+    assert all(pairs[k]>=4.5 for k in ['code','codeBlock','add','enabled','menu','scroll','category','selectedCategory']),pairs
     assert pairs['disabled']>=4.5,pairs
     assert results['addSvg']['pathFill']=='none',results['addSvg']
     assert results['addSvg']['pathStroke']!='none',results['addSvg']

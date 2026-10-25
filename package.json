@@ -1,7 +1,7 @@
 {
   "name": "dsh-theme-tnolar",
-  "version": "0.5.6",
-  "description": "TNOLAR military terminal DSH theme with high-contrast UI and visible insert-seat-axial-twist mechanical authorization",
+  "version": "0.5.7",
+  "description": "TNOLAR DSH strategic terminal theme with high-contrast UI and interactive four-fingerprint startup scan",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {
@@ -35,7 +35,9 @@
     "terminal-ui",
     "military-console",
     "tno-inspired",
-    "strategic-dashboard"
+    "strategic-dashboard",
+    "fingerprint-ui",
+    "biometric-scan-animation"
   ],
   "engines": {
     "node": "^22.19.0 || >=24.0.0",
