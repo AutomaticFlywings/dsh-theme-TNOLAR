@@ -21,7 +21,9 @@ with sync_playwright() as p:
     assert '点 击 授 权 解 锁' in frame.locator('#authUnlock').inner_text()
     assert frame.locator('.auth-key.unlocked').count() == 0
     assert frame.locator('#authUnlock').is_enabled()
-    assert frame.evaluate('''() => !!Array.from(document.styleSheets).flatMap(s => { try {return Array.from(s.cssRules)} catch { return [] } }).find(r => r.name === 'key-turn')''')
+    assert frame.evaluate('''() => !!Array.from(document.styleSheets).flatMap(s => { try {return Array.from(s.cssRules)} catch { return [] } }).find(r => r.name === 'key-insert-ccw')''')
+    assert frame.locator('.lock-interact').count()==4
+    assert frame.locator('use[href="#tnolar-physical-key"]').count()==4
     rects = frame.evaluate('''() => {
       const button=document.getElementById('authUnlock').getBoundingClientRect();
       const keys=document.querySelector('.auth-keys').getBoundingClientRect();
@@ -30,11 +32,17 @@ with sync_playwright() as p:
     print('layout',rects)
     assert rects['button']['bottom']+10 < rects['keys']['top'], 'Authorization button collides with keys'
     frame.locator('body').screenshot(path=str(ROOT/'docs/preview-tnolar-auth.png'))
-    frame.locator('#authUnlock').click()
-    frame.wait_for_timeout(200)
+    frame.locator('#key0 .lock-interact').click() # physical key may start authorization directly
+    frame.wait_for_timeout(535)
     assert frame.locator('.auth-key.turning').count() >= 1, 'Turning animation was not triggered'
+    rotation = frame.evaluate('''() => { const m = new DOMMatrix(getComputedStyle(document.querySelector('#key0 .key-rotor')).transform); return Math.atan2(m.b,m.a)*180/Math.PI }''')
+    print('counterclockwise rotation at 535ms',rotation)
+    assert rotation < -15, f'Key was not turning counterclockwise: {rotation}'
+    frame.locator('body').screenshot(path=str(ROOT/'docs/preview-tnolar-keyturn.png'))
     frame.wait_for_function('document.getElementById("stage").dataset.phase === "ready"',timeout=8000)
     assert frame.locator('.auth-key.unlocked').count() == 4
+    finalRotation = frame.evaluate('''() => { const m = new DOMMatrix(getComputedStyle(document.querySelector('#key0 .key-rotor')).transform); return Math.atan2(m.b,m.a)*180/Math.PI }''')
+    assert abs(finalRotation+90) < 1, f'Final key angle should be -90 degrees, got {finalRotation}'
     frame.wait_for_selector('#readyCard', state='visible', timeout=3000)
     assert frame.locator('.ready-heading').text_content() == '请您指挥'
     assert '等待命令输入' in frame.locator('.ready-desc').inner_text()

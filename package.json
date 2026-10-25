@@ -1,7 +1,7 @@
 {
   "name": "dsh-theme-tnolar",
-  "version": "0.5.0",
-  "description": "DSH classic-script compatible TNOLAR strategic terminal theme and interactive 9-capital / 14-link startup animation",
+  "version": "0.5.1",
+  "description": "DSH TNOLAR strategic terminal theme with skeuomorphic counter-clockwise mechanical key startup animation",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {
