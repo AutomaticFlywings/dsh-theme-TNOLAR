@@ -4,12 +4,12 @@
 >
 > **非官方作品**。不包含 TNO/LAR 游戏源码或专有贴图；地图线路、权限解锁和系统状态均为视觉演示，**不代表实际联网或真实授权**。
 
-![TNOLAR 战略终端风格（模拟 DSH 宿主预览）](docs/preview-tnolar-theme.png)
+![TNOLAR 战略终端风格（模拟 DSH 宿主预览）](docs/preview-tnolar-theme.svg)
 
 <details>
 <summary>查看世界地图启动动画预览</summary>
 
-![9 个首都 / 14 条链路的启动动画](docs/preview-tnolar-map.png)
+![9 个首都 / 14 条链路的启动动画](docs/preview-tnolar-map.svg)
 
 </details>
 
