@@ -1,0 +1,62 @@
+{
+  "name": "dsh-theme-tnolar",
+  "version": "0.4.0",
+  "description": "DSH Web tactical command UI theme with full component styling and a nine-capital animated global route map",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "theme",
+    "tnolar",
+    "startup-animation",
+    "world-map",
+    "web-ui",
+    "terminal-ui",
+    "military-console",
+    "tno-inspired",
+    "strategic-dashboard"
+  ],
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": ">=0.2.0-0 <0.3.0-0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "license": "MIT",
+  "author": "TNOLAR community contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AutomaticFlywings/dsh-theme-TNOLAR.git"
+  },
+  "homepage": "https://github.com/AutomaticFlywings/dsh-theme-TNOLAR#readme",
+  "bugs": {
+    "url": "https://github.com/AutomaticFlywings/dsh-theme-TNOLAR/issues"
+  }
+}

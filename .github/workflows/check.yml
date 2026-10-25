@@ -1,0 +1,24 @@
+name: Bundle validation
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build embedded animation
+        run: npm run build
+      - name: Verify bundle metadata and routes
+        run: npm run check
+      - name: Graph regression tests
+        run: npm test
+      - name: Confirm packaged files
+        run: npm pack --dry-run

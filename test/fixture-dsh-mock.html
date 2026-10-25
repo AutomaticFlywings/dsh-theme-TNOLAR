@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DSH 模拟工作区（用于主题预览）</title>
+<style>
+*{box-sizing:border-box}html,body{padding:0;margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',sans-serif}
+#root{height:100%}.AppFrame_frame__qa{height:100%;display:grid;grid-template-columns:303px minmax(0,1fr);background:#fff}
+.sidebarCol__qa{min-width:0;overflow:hidden;border-right:1px solid #eee}.SidebarRoot_root__qa{height:100%;display:flex;flex-direction:column;padding:12px 12px}
+.logoRow__qa{height:64px;display:flex;align-items:center;justify-content:space-between;padding:2px 6px}
+.brandName__qa{display:flex;gap:9px;align-items:center;font-size:22px;letter-spacing:-.02em;font-weight:630}.brandName__qa small{font:700 10px/16px Consolas,monospace;border-radius:3px;border:1px solid currentColor;padding:0 4px;letter-spacing:.03em}
+.mini-icon{opacity:.7;font-size:18px}.newSession__qa{height:40px;display:flex;align-items:center;justify-content:center;border:1px solid #ccc;border-radius:12px;margin:7px 2px 13px;gap:10px;background:#fff;font-weight:560;font-size:14px}
+.panelList__qa{display:flex;flex-direction:column;gap:6px}.panelRow__qa{height:42px;border-radius:9px;display:flex;align-items:center;gap:14px;padding:0 12px;color:inherit;font-size:14px;cursor:pointer}
+.panelRow__qa.panelActive__qa{background:rgba(220,230,232,.15)}.navSymbol{width:20px;text-align:center;color:#84aaa9;font-size:17px}
+.regionArea__qa{margin-top:22px;display:flex;flex:1;min-height:0;flex-direction:column}.WorkspaceBrowser_root__qa{display:flex;flex:1;min-height:0;flex-direction:column}
+.sectionHeader__qa{height:44px;display:flex;align-items:center;justify-content:space-between;flex:0 0 44px;padding:0 8px}.sectionLabel__qa{font-size:13px;color:#789}.sectionOps{opacity:.55;font-size:15px;letter-spacing:5px}
+.treeRows{display:flex;flex:1;min-height:0;flex-direction:column;gap:6px;overflow:auto;padding:8px 0}.projectRow__qa,.sessionRow__qa{min-height:35px;display:flex;align-items:center;padding:0 8px;gap:10px;white-space:nowrap;overflow:hidden;flex:0 0 35px;font-size:14px}
+.projectRow__qa{font-weight:600}.rowSymbol{font-size:15px;color:#78d3ca}.sessionRow__qa{padding-left:24px}.sessionRow__qa .title__qa{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}.time__qa{font-size:11px;color:#74979b;font-family:monospace}
+.centerCol__qa{position:relative;min-width:0;overflow:hidden}.ConversationRoot_root__qa{height:100%;display:flex;flex-direction:column;min-height:0}
+.ConversationRoot_header__qa{height:78px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:14px 36px;color:inherit}
+.titleRow__qa{display:flex;align-items:center;justify-content:space-between;height:25px}.crumbs__qa{font-size:13px;color:#93b7b8;letter-spacing:.05em}.crumbCurrent__qa{color:inherit}.headerUtilities__qa{font-size:12px;letter-spacing:.2em;color:#7ab7b4}.tabs__qa{display:flex;gap:32px;margin-top:6px}.tabActive__qa{font-size:12px;font-weight:600;color:#b3eee4;border-bottom:2px solid #65d6c4;padding:4px 0}
+.hero-main{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;transform:translateY(-4%);padding:16px}
+.hero-mark{font-size:12px;letter-spacing:.36em;color:#78b9b8;margin-bottom:14px;font-family:Consolas,monospace}.hero-headline{font-size:32px;font-weight:550;letter-spacing:.12em;display:flex;align-items:center;gap:12px;justify-content:center}.hero-headline i{font-style:normal;color:#6bccc4;font-size:31px}.hero-description{max-width:690px;text-align:center;color:#87a6ad;font-size:14px;line-height:1.9;margin:20px 0 30px}.workspaceRow__qa{width:min(100%,860px);display:flex;align-items:center;justify-content:space-between;color:#87b2b4;margin-bottom:12px;padding:0 15px;font-size:12px;font-family:Consolas,monospace;letter-spacing:.08em}
+.InputBar_card__qa{width:min(100%,870px);height:172px;background:#fafafa;border-radius:24px;border:1px solid #ddd;padding:20px 24px 18px;display:flex;flex-direction:column;justify-content:space-between;position:relative}
+.composer-text{font-size:16px;line-height:24px;color:#69898e;outline:none;min-height:48px}.inputRow{display:flex;align-items:center;justify-content:space-between}.inputTools{font-size:12px;color:#98b7b6;display:flex;align-items:center;gap:22px}.inputTools .circle{border:1px solid currentColor;width:28px;height:28px;border-radius:7px;display:grid;place-items:center;font-size:19px}
+.InputBar_primary__qa{height:35px;min-width:35px;border:0;background:#81d0cb;border-radius:7px;color:#fff;font-size:18px}.footerStatus{position:absolute;bottom:25px;left:36px;right:36px;display:flex;justify-content:space-between;align-items:center;color:#688f98;font:10px/14px Consolas,monospace;letter-spacing:.12em}.footerStatus .live{color:#73d7c9}.scan{opacity:.65;display:flex;align-items:center;gap:8px}
+.preview-disclaimer{position:fixed;bottom:8px;right:10px;font:10px Consolas,monospace;color:#7e989e;z-index:5;opacity:.68}
+@media(max-width:900px){.AppFrame_frame__qa{grid-template-columns:244px minmax(0,1fr)}.sidebarCol__qa{font-size:13px}.hero-headline{font-size:24px}}
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="AppFrame_frame__qa">
+    <div class="sidebarCol__qa">
+      <div class="SidebarRoot_root__qa">
+        <div class="logoRow__qa"><div class="brandName__qa"><span style="color:#6bd9d3;font-size:25px">◈</span> deepseek <small>HARNESS</small></div><span class="mini-icon">◧</span></div>
+        <button class="newSession__qa" type="button"><span style="color:#83e6d9">⊕</span> 新会话</button>
+        <nav class="panelList__qa" aria-label="导航">
+          <div class="panelRow__qa"><span class="navSymbol">✧</span> 插件</div>
+          <div class="panelRow__qa panelActive__qa"><span class="navSymbol">▦</span> 插件市场</div>
+          <div class="panelRow__qa"><span class="navSymbol">◷</span> 自动化任务</div>
+          <div class="panelRow__qa"><span class="navSymbol">▣</span> SSH</div>
+        </nav>
+        <div class="regionArea__qa"><div class="WorkspaceBrowser_root__qa">
+          <div class="sectionHeader__qa"><span class="sectionLabel__qa">工作区 / WORKSPACE</span><span class="sectionOps">⌕ ⚙ +</span></div>
+          <div class="treeRows">
+            <div class="projectRow__qa"><span class="rowSymbol">▤</span> project <span style="margin-left:auto;font:10px Consolas,monospace;color:#86a9a7">08</span></div>
+            <div class="sessionRow__qa selected__qa" aria-selected="true"><span class="rowSymbol">›</span><span class="title__qa">新会话</span><span class="time__qa">NOW</span></div>
+            <div class="sessionRow__qa"><span class="rowSymbol">·</span><span class="title__qa">检查 Proxmox 服务状态</span><span class="time__qa">21H</span></div>
+            <div class="sessionRow__qa"><span class="rowSymbol">·</span><span class="title__qa">部署与运行环境设计</span><span class="time__qa">1D</span></div>
+            <div class="sessionRow__qa"><span class="rowSymbol">·</span><span class="title__qa">插件调试与依赖排查</span><span class="time__qa">1D</span></div>
+            <div class="projectRow__qa"><span class="rowSymbol">▤</span> QQ 消息 <span style="margin-left:auto;font:10px Consolas,monospace;color:#86a9a7">02</span></div>
+            <div class="sessionRow__qa"><span class="rowSymbol">·</span><span class="title__qa">消息同步与检索</span><span class="time__qa">2D</span></div>
+          </div>
+          <div style="font:11px Consolas,monospace;color:#6e9c9a;letter-spacing:.1em;padding:16px 6px 5px;border-top:1px solid rgba(89,160,159,.2)">◈ &nbsp;  PROFILE: WEB / 0.4.0 &nbsp; <span style="color:#6edbcf">●</span></div>
+        </div></div>
+      </div>
+    </div>
+    <div class="centerCol__qa">
+      <div class="ConversationRoot_root__qa">
+        <div class="ConversationRoot_header__qa"><div class="titleRow__qa"><span class="crumbs__qa">⌑ 　project　 /　 <strong class="crumbCurrent__qa">新会话</strong></span><span class="headerUtilities__qa">◈ TNOLAR / COMMAND</span></div><div class="tabs__qa"><span class="tabActive__qa">工作台 / CONSOLE</span><span style="font-size:12px;color:#6a9a9e;margin-top:5px">任务日志</span><span style="font-size:12px;color:#6a9a9e;margin-top:5px">文件与插件</span></div></div>
+        <div class="hero-main">
+          <div class="hero-mark">D S H 　/　 G L O B A L 　C O M M A N D</div>
+          <div class="hero-headline"><i>✦</i> 探索未至之境 <span style="font-size:10px;border:1px solid rgba(108,219,209,.4);padding:3px 7px;color:#88d1cf;letter-spacing:.08em">预览版</span></div>
+          <p class="hero-description">全域任务调度 · 插件协作 · 安全授权<br/>将每一次交互组织成可追踪的指令与工作流程。</p>
+          <div class="workspaceRow__qa"><span>▱  PROJECT / STANDARD MODE</span><span style="color:#77b6b4">INPUT CHANNEL : READY</span></div>
+          <div class="InputBar_card__qa"><div class="composer-text" contenteditable="true" role="textbox">描述你想要构建的内容，调用指令，@ 文件或对话</div><div class="inputRow"><div class="inputTools"><span class="circle">+</span> ◇ 工作区内修改　⌄</div><div class="inputTools" style="gap:14px"><span>GPT-6.1-Sol Xhigh</span><button type="button" class="InputBar_primary__qa">↑</button></div></div></div>
+        </div>
+        <div class="footerStatus"><span>TNOLAR // STRATEGIC INTERFACE · BUILD 0.4.0</span><span class="scan"><span class="live">●</span> SYSTEM ONLINE　｜　9 NODES / 14 LINKS</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="preview-disclaimer">DSH MOCK PREVIEW · 非真实 DSH 截图</div>
+</body>
+</html>

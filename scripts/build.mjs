@@ -1,0 +1,12 @@
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+const root = resolve(import.meta.dirname, '..');
+const html = readFileSync(resolve(root, 'assets/world-startup.html'), 'utf8');
+const template = readFileSync(resolve(root, 'src/client.template.js'), 'utf8');
+const theme = readFileSync(resolve(root, 'src/tnolar-theme.css'), 'utf8');
+const slot = '__STARTUP_HTML_JSON__';
+if (!template.includes(slot) || !html.includes('<html')) throw new Error('Missing client template or startup HTML');
+const source = template.replace(slot, JSON.stringify(html)).replace('__TNOLAR_THEME_CSS_JSON__', JSON.stringify(theme));
+mkdirSync(resolve(root,'lib'), {recursive:true});
+writeFileSync(resolve(root, 'lib/client.js'), source, 'utf8');
+console.log('[dsh-theme-tnolar] built lib/client.js with', html.length, 'HTML characters');

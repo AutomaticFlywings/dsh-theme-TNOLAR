@@ -1,0 +1,331 @@
+/*
+ * TNOLAR / STRATEGIC CONSOLE
+ * Core tokens match DSH's --dsw-* theme contract; component rules target
+ * CSS-module role names verified against the DSH Web source (2026-10).
+ * All rules are gated by html[data-tnolar-theme="1"] and removed on teardown.
+ * No selectors affect iframe content, other sites, or external widgets.
+ */
+html[data-tnolar-theme="1"] {
+  color-scheme: dark;
+  --tnolar-bg: #040d13;
+  --tnolar-deck: #061820;
+  --tnolar-surface: #0b222b;
+  --tnolar-surface-alt: #102c36;
+  --tnolar-line: #315860;
+  --tnolar-line-bright: #518e93;
+  --tnolar-signal: #6be5da;
+  --tnolar-signal-strong: #a3fff0;
+  --tnolar-text: #dbeeea;
+  --tnolar-muted: #83abae;
+  --tnolar-warn: #dbb76b;
+  --tnolar-error: #e98285;
+  --tnolar-glow: 0 0 20px rgba(60, 215, 207, .12);
+}
+
+/* The DSH presenter may set tokens inline on body. Values here intentionally
+ * override those while the TNOLAR theme is enabled; remove the style to undo. */
+html[data-tnolar-theme="1"] :is(body, #root) {
+  --dsw-alias-bg-base: #06131b !important;
+  --dsw-alias-bg-layer-1: #0b2029 !important;
+  --dsw-alias-bg-layer-2: #112b34 !important;
+  --dsw-alias-bg-layer-3: #163740 !important;
+  --dsw-alias-bg-module-platform: #0d2630 !important;
+  --dsw-alias-bg-overlay: #0d252f !important;
+  --dsw-alias-border-l1: #24444c !important;
+  --dsw-alias-border-l2: #345b63 !important;
+  --dsw-alias-border-l3: #42737a !important;
+  --dsw-alias-border-l4: #60999d !important;
+  --dsw-alias-brand-primary: #7cebe1 !important;
+  --dsw-alias-label-primary: #e2f1ed !important;
+  --dsw-alias-label-secondary: #afcbca !important;
+  --dsw-alias-label-tertiary: #87abb0 !important;
+  --dsw-alias-label-caption: #7499a1 !important;
+  --dsw-alias-label-dimmed: #62858f !important;
+  --dsw-alias-label-primary-bluish: #b2f6ed !important;
+  --dsw-alias-button-primary-fill: #126c70 !important;
+  --dsw-alias-button-primary-hover: #20888c !important;
+  --dsw-alias-button-info-fill: #177b7c !important;
+  --dsw-alias-button-info-hover: #249696 !important;
+  --dsw-alias-button-elevated-fill: #102b33 !important;
+  --dsw-alias-button-floating-hover: #17454c !important;
+  --dsw-alias-button-tool-bar-fill: #102832 !important;
+  --dsw-alias-button-tool-bar-hover: #1b414b !important;
+  --dsw-alias-interactive-bg-hover: #14333b !important;
+  --dsw-alias-interactive-bg-hover-solid: #19404a !important;
+  --dsw-alias-interactive-bg-hover-accent: #15454c !important;
+  --dsw-alias-interactive-bg-active: #194a52 !important;
+  --dsw-specific-sidebar-fill: #071820 !important;
+  --dsw-specific-sidebar-nav-item-active: #153b45 !important;
+  --dsw-specific-sidebar-nav-item-active-accent: #1e5658 !important;
+  --dsw-specific-sidebar-nav-item-hover: #102f39 !important;
+  --dsw-specific-input-major: #09202a !important;
+  --dsw-specific-bubble: #102d36 !important;
+  --dsw-specific-bubble-highlight: #1a4550 !important;
+  --dsw-alias-state-business-primary: #6be5da !important;
+  --dsw-alias-state-business-tertiary: #15373c !important;
+  --dsw-alias-state-success-primary: #76dcc5 !important;
+  --dsw-alias-state-warn-primary: #dfb873 !important;
+  --dsw-alias-state-error-primary: #ee8187 !important;
+  --dsw-static-deepseek-500: #70e5dc !important;
+  --dsw-static-deepseek-450: #60d5cc !important;
+  --dsw-static-deepseek-200: #225b62 !important;
+  --dsw-radius-xs: 3px !important;
+  --dsw-radius-sm: 5px !important;
+  --dsw-radius-md: 8px !important;
+  --dsw-radius-lg: 11px !important;
+  --dsw-radius-xl: 13px !important;
+  --dsw-radius-panel: 14px !important;
+  --dsw-elevation-stroke-color: #3a7075 !important;
+  --dsw-elevation-soft: 0 0 0 1px rgba(82,155,157,.24), 0 15px 36px rgba(0,0,0,.30) !important;
+  --dsw-focus-ring-color: #83f2e5 !important;
+}
+
+html[data-tnolar-theme="1"] body {
+  background: #040d13 !important;
+  color: var(--tnolar-text);
+}
+html[data-tnolar-theme="1"] #root {
+  background: #06131b;
+  color: var(--tnolar-text);
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* System grid and illuminated main deck. The grid is on the workspace
+ * background, never a pointer-catching overlay over the conversation. */
+html[data-tnolar-theme="1"] #root [class*="centerCol"] {
+  position: relative;
+  background-color: #06131b;
+  background-image:
+    linear-gradient(rgba(57,151,159,.047) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57,151,159,.047) 1px, transparent 1px),
+    radial-gradient(ellipse at 53% 0%, rgba(24,96,107,.17), transparent 68%);
+  background-size: 42px 42px, 42px 42px, 100% 100%;
+}
+html[data-tnolar-theme="1"] #root [class*="centerCol"] [class*="ConversationRoot_root"] {
+  background: transparent;
+}
+
+/* Sidebar: subtle vertical illumination and functional left rail. */
+html[data-tnolar-theme="1"] #root [class*="sidebarCol"] {
+  border-right: 1px solid rgba(96,181,185,.44);
+  background:
+    linear-gradient(90deg, rgba(86,226,216,.07), transparent 5px),
+    linear-gradient(180deg, #0a2028, #05141b 80%);
+  box-shadow: 5px 0 34px rgba(0,0,0,.22), inset -1px 0 rgba(103,213,207,.10);
+}
+html[data-tnolar-theme="1"] #root [class*="logoRow"] {
+  position: relative;
+  border-bottom: 1px solid rgba(90,171,175,.28);
+  padding-bottom: 7px;
+}
+html[data-tnolar-theme="1"] #root [class*="brandName"] {
+  letter-spacing: .045em;
+  text-shadow: 0 0 18px rgba(100,226,215,.13);
+}
+html[data-tnolar-theme="1"] #root [class*="newSession"]:not([class*="Label"]):not([class*="Shortcut"]):not([class*="Content"]) {
+  border: 1px solid rgba(108,216,207,.52);
+  border-radius: 7px;
+  background: linear-gradient(95deg, rgba(31,104,108,.28), rgba(14,46,55,.86));
+  box-shadow: inset 0 1px rgba(143,245,230,.11), 0 0 13px rgba(61,175,172,.08);
+}
+html[data-tnolar-theme="1"] #root [class*="newSession"]:hover {
+  background: linear-gradient(95deg, #19434d, #12333d);
+  border-color: #70e0d7;
+  box-shadow: 0 0 18px rgba(73,198,191,.17);
+}
+html[data-tnolar-theme="1"] #root [class*="panelRow"] {
+  position: relative;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+html[data-tnolar-theme="1"] #root [class*="panelRow"]:hover {
+  background: rgba(44,126,133,.14);
+  border-color: rgba(78,180,185,.18);
+}
+html[data-tnolar-theme="1"] #root [class*="panelRow"][class*="panelActive"] {
+  color: #eafbf7;
+  border-color: rgba(96,214,207,.39);
+  background: linear-gradient(90deg, rgba(70,179,177,.18), rgba(11,38,47,.28));
+  box-shadow: inset 2px 0 #69e6db;
+}
+
+/* Workspace browser. The active session is a *real selection indicator*:
+ * left signal rail, cyan hairline, and deep-panel shadow. */
+html[data-tnolar-theme="1"] #root [class*="sectionHeader"] {
+  border-bottom: 1px solid rgba(99,176,181,.20);
+  border-radius: 0;
+}
+html[data-tnolar-theme="1"] #root [class*="sectionLabel"] {
+  color: #7fbdbe;
+  font: 600 11px/20px var(--ds-font-family-code, monospace);
+  letter-spacing: .14em;
+}
+html[data-tnolar-theme="1"] #root :is([class*="projectRow"], [class*="sessionRow"], [class*="searchResultRow"]) {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+html[data-tnolar-theme="1"] #root :is([class*="projectRow"], [class*="sessionRow"], [class*="searchResultRow"]):hover {
+  background-color: #153740;
+  border-color: rgba(93,202,199,.21);
+}
+html[data-tnolar-theme="1"] #root :is([class*="sessionRow"], [class*="searchResultRow"]):is([class*="selected"], [aria-selected="true"], [aria-current="page"], [data-selected="true"]) {
+  color: #f2fffb;
+  border-color: rgba(104,218,210,.52);
+  background: linear-gradient(90deg, rgba(24,95,102,.73), rgba(10,42,52,.75) 80%);
+  box-shadow: inset 2px 0 #83f8e6, inset 0 1px rgba(136,244,232,.06), 0 0 16px rgba(30,164,162,.13);
+}
+html[data-tnolar-theme="1"] #root :is([class*="sessionRow"], [class*="searchResultRow"]):is([class*="selected"], [aria-selected="true"], [aria-current="page"], [data-selected="true"]) [class*="title"] {
+  color: #f0fff9;
+  font-weight: 600;
+}
+html[data-tnolar-theme="1"] #root [class*="searchExpanded"] {
+  border-color: rgba(106,217,211,.52);
+  background: rgba(16,48,58,.70);
+}
+html[data-tnolar-theme="1"] #root [class*="time"] {
+  font-family: var(--ds-font-family-code, monospace);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .035em;
+}
+
+/* Top command header, navigation tabs and breadcrumb rail. */
+html[data-tnolar-theme="1"] #root [class*="header"]:has(> [class*="titleRow"]),
+html[data-tnolar-theme="1"] #root [class*="header"]:has([class*="headerUtilities"]) {
+  position: relative;
+  border-bottom: 1px solid rgba(96,189,188,.37);
+  background: linear-gradient(90deg, rgba(18,63,72,.39), rgba(5,22,30,.95) 60%);
+  box-shadow: inset 0 1px rgba(120,218,210,.08), 0 3px 18px rgba(0,0,0,.17);
+}
+html[data-tnolar-theme="1"] #root [class*="header"]:has(> [class*="titleRow"])::after,
+html[data-tnolar-theme="1"] #root [class*="header"]:has([class*="headerUtilities"])::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  bottom: -1px;
+  left: 22px;
+  width: min(220px,25%);
+  height: 1px;
+  background: linear-gradient(90deg, #77f0e1, transparent);
+  opacity: .82;
+}
+html[data-tnolar-theme="1"] #root [class*="crumbCurrent"],
+html[data-tnolar-theme="1"] #root [class*="tabActive"] {
+  color: #c9fff4;
+  text-shadow: 0 0 12px rgba(95,225,218,.17);
+}
+html[data-tnolar-theme="1"] #root [class*="tabActive"] {
+  border-bottom-color: #6fe6da;
+}
+html[data-tnolar-theme="1"] #root [class*="headerUtilities"] button,
+html[data-tnolar-theme="1"] #root [class*="headerCorner"] button {
+  border-radius: 5px;
+}
+
+/* Hero + message authoring surface: tactical input bay with corner ticks.
+ * Do not add pseudo-elements to the actual contenteditable field. */
+html[data-tnolar-theme="1"] #root [class*="InputBar_card"] {
+  border: 1px solid rgba(103,190,189,.46);
+  border-radius: 13px;
+  background: linear-gradient(180deg, #0c2831, #081d26 92%);
+  box-shadow: 0 0 0 1px rgba(30,97,101,.28), 0 13px 35px rgba(0,0,0,.26), 0 0 30px rgba(63,204,193,.08);
+}
+html[data-tnolar-theme="1"] #root [class*="InputBar_card"]::before {
+  content: '';
+  pointer-events:none;
+  position:absolute;
+  left: -1px;
+  top: -1px;
+  width: 14px;
+  height: 14px;
+  border-left: 2px solid #73ede2;
+  border-top: 2px solid #73ede2;
+  border-radius: 11px 0 0 0;
+  opacity: .82;
+}
+html[data-tnolar-theme="1"] #root [class*="InputBar_card"]::after {
+  content: '';
+  pointer-events:none;
+  position:absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 14px;
+  height: 14px;
+  border-right: 2px solid #65d6cc;
+  border-bottom: 2px solid #65d6cc;
+  border-radius: 0 0 11px 0;
+  opacity: .72;
+}
+html[data-tnolar-theme="1"] #root [class*="InputBar_card"]:focus-within {
+  border-color: #7af4e7;
+  box-shadow: 0 0 0 2px rgba(102,233,218,.18), 0 14px 38px rgba(0,0,0,.35), 0 0 34px rgba(57,216,205,.12);
+}
+html[data-tnolar-theme="1"] #root [class*="InputBar_primary"] {
+  border-radius: 6px !important;
+  border: 1px solid rgba(143,250,231,.48);
+  background: linear-gradient(155deg, #337d7e, #12585b);
+  box-shadow: 0 0 13px rgba(83,208,201,.16);
+}
+html[data-tnolar-theme="1"] #root [class*="InputBar_primary"]:not(:disabled):hover {
+  background: #267e7b;
+  box-shadow: 0 0 20px rgba(89,226,215,.25);
+}
+html[data-tnolar-theme="1"] #root :is(input,textarea,[contenteditable="true"]){
+  caret-color: #8df8e9;
+}
+html[data-tnolar-theme="1"] #root :is(input,textarea):not([type="checkbox"]):not([type="radio"]){
+  border-color: var(--tnolar-line-bright);
+  border-radius: 7px;
+}
+html[data-tnolar-theme="1"] #root :is(input,textarea):not([type="checkbox"]):not([type="radio"]):focus-visible{
+  outline: 1px solid #75ebdf;
+  outline-offset: 1px;
+  box-shadow: 0 0 0 3px rgba(76,199,190,.13);
+}
+html[data-tnolar-theme="1"] #root [contenteditable="true"]:focus-visible {
+  outline: none;
+}
+html[data-tnolar-theme="1"] #root :is(input,textarea)::placeholder { color: #6d9299; }
+
+/* Buttons, pills and code follow the same geometry but preserve DSH's
+ * semantic fill/status colors. Danger buttons are not recolored green. */
+html[data-tnolar-theme="1"] #root button:not([class*="toggle"]) {
+  border-radius: var(--dsw-radius-md, 8px);
+  transition: background-color 130ms ease, border-color 130ms ease, box-shadow 130ms ease;
+}
+html[data-tnolar-theme="1"] #root button:focus-visible,
+html[data-tnolar-theme="1"] #root a:focus-visible,
+html[data-tnolar-theme="1"] #root [role="button"]:focus-visible {
+  outline: 2px solid #8cf4e7;
+  outline-offset: 2px;
+}
+html[data-tnolar-theme="1"] #root pre {
+  border: 1px solid rgba(96,175,176,.34);
+  border-radius: 8px;
+  background: #071a22;
+  box-shadow: inset 0 1px rgba(119,218,207,.06);
+}
+html[data-tnolar-theme="1"] #root :is(code,kbd,samp) {
+  font-family: var(--ds-font-family-code, 'JetBrains Mono', Consolas, monospace);
+}
+html[data-tnolar-theme="1"] #root ::selection { background: rgba(93,219,205,.27); color: #fff; }
+
+/* Outside-#root overlays receive the body-level token palette. Keep portals
+ * within native sizing/layout instead of mass-changing dialog internals. */
+html[data-tnolar-theme="1"] body > :is([role="dialog"],[role="menu"]){
+  color: var(--tnolar-text);
+  border-color: var(--tnolar-line);
+  box-shadow: 0 20px 44px rgba(0,0,0,.4);
+}
+
+/* DSH may use system scrollbars; this is only a palette request. */
+html[data-tnolar-theme="1"] #root * { scrollbar-color: #355a62 transparent; }
+@media (prefers-reduced-motion: reduce){
+  html[data-tnolar-theme="1"] #root :is(button,[class*="sessionRow"],[class*="panelRow"]){transition:none !important;}
+}
+@media (max-width: 640px){
+  html[data-tnolar-theme="1"] #root [class*="sectionLabel"]{letter-spacing:.07em;}
+  html[data-tnolar-theme="1"] #root [class*="headerUtilities"]{gap:4px;}
+}
