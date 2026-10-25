@@ -16,14 +16,19 @@ with sync_playwright() as p:
     errors=[]
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.set_content(FIXTURE)
-    result=page.evaluate('''async (source) => {
-      const url = URL.createObjectURL(new Blob([source], {type:'text/javascript'}));
-      try {
-        const plugin = await import(url);
-        plugin.apply({effect(fn){window.tnolarCleanup=fn();}});
-        return {name:plugin.name,theme:!!document.getElementById('dsh-theme-tnolar-theme-style')};
-      } finally {URL.revokeObjectURL(url)}
-    }''', PLUGIN)
+    # DSH uses ordinary <script src> to execute a classic registration bundle.
+    # Do NOT dynamically import lib/client.js: native ESM accepted the broken v0.4.0 output.
+    page.evaluate('''() => {
+      window.__ModuleLoader__ = { load(value) { window.tnolarBundleRegistration = value; } };
+    }''')
+    page.add_script_tag(content=PLUGIN)
+    result = page.evaluate('''() => {
+      const registration = window.tnolarBundleRegistration;
+      if (!registration || registration.id !== 'dsh-theme-tnolar') throw Error('DSH client registration missing');
+      const plugin = registration.factory(() => { throw Error('Unexpected import in TNOLAR bundle'); });
+      plugin.apply({effect(fn){window.tnolarCleanup=fn();}});
+      return {name:plugin.name,theme:!!document.getElementById('dsh-theme-tnolar-theme-style')};
+    }''')
     assert result == {'name':'dsh-theme-tnolar','theme':True}, result
     assert page.locator('html[data-tnolar-theme="1"]').count()==1
     assert page.locator('#dsh-theme-tnolar-overlay iframe').count()==1

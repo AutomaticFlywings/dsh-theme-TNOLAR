@@ -1,7 +1,7 @@
 {
   "name": "dsh-theme-tnolar",
-  "version": "0.4.0",
-  "description": "DSH Web tactical command UI theme with full component styling and a nine-capital animated global route map",
+  "version": "0.4.1",
+  "description": "DSH classic-script compatible TNOLAR strategic terminal theme and 9-capital / 14-link startup animation",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {

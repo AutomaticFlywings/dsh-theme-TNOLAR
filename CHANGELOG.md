@@ -1,4 +1,11 @@
-# 更新日志 / Changelog
+# 更新日志
+
+## v0.4.1（2026-10-25）
+
+- **修复 DSH Web 启动崩溃**：客户端代码由直接 ESM 导出改为官方 classic-script `window.__ModuleLoader__.load({id, factory})` 注册。
+- 静态检查新增 classic-script 解析与 factory 返回值验证（`node:vm.Script`），防止回归。
+- Playwright 改为通过真实普通脚本标签加载 Bundle，避免原来的动态 `import()` 测试误报通过。
+- 保留 v0.4.0 军工终端主题、9 个首都和 14 条指定线路，未修改视觉资产。
 
 ## [0.4.0] - 2026-10-25
 

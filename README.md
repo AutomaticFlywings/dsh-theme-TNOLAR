@@ -15,15 +15,16 @@
 
 ## 主要功能
 
-- **完整 DSH 主题化（v0.4.0 新增）**：侧栏底板、插件导航、工作区分组、会话 hover / 选中态、顶部会话标题栏、面包屑、标签页、输入框、发送按钮、通用按钮、对焦描边、代码块与滚动条。视觉重点为军工设备面板、扫描网格、青绿信号光和低干扰高对比文本。
+- **完整 DSH 主题化（v0.4.0 起）**：侧栏底板、插件导航、工作区分组、会话 hover / 选中态、顶部会话标题栏、面包屑、标签页、输入框、发送按钮、通用按钮、对焦描边、代码块与滚动条。视觉重点为军工设备面板、扫描网格、青绿信号光和低干扰高对比文本。
 - **可靠的会话识别**：当前会话带青绿色左侧识别条、边框与弱光晕；其他会话保持暗色，避免亮色块喧宾夺主。
 - **统一交互体系**：将 DSH `--dsw-*` 语义变量和圆角尺度统一到深色控制台风格；危险/错误状态保留红色，不会全部被染成绿色。
 - **动画与主题结合**：开机自检 → 世界地图扫描 → 14 条指定路线建立 → 授权解锁 → 进入控制台；动画结束自动回到主界面。
 - **9 个首都，14 条路线**：已删除巴黎与其他多余连接，节点坐标按真实经纬度投影，曲线路径是动画示意。
 - **可独立启停**：启动动画与主界面主题可分别开关，支持重播、跳过、超时自动退出；插件卸载时撤销样式和遮罩。
 - **无需联网资源**：内置 HTML/SVG/CSS/JS；动画使用限制脚本权限的 sandbox iframe，不读取会话内容，不调用 SSH 或 Agent。
+- **v0.4.1 启动兼容性修复**：客户端构建为 DSH 所需的 classic-script 模块注册格式，修复此前 `Unexpected token 'export'` 导致的 Web 启动中断。
 
-> **兼容性说明**：已经完成打包检查、9 节点/14 链路测试和带模拟 DSH DOM 的浏览器烟雾测试；尚未在所有真实 DSH 安装与桌面环境上逐一验证。建议首次在独立 profile 中测试。预览图明确使用模拟宿主页面，不是实际 DSH 运行截图。
+> **兼容性说明**：已经完成打包检查、9 节点/14 链路测试和带模拟 DSH DOM 的浏览器烟雾测试；尚未在所有真实 DSH 安装与桌面环境上逐一验证。建议首次在独立 profile 中测试。v0.4.1 已通过 DSH classic-script 协议模拟测试，但仍需在真实 DSH 环境验证。GitHub README 的 SVG 预览为示意插画，非实际 DSH 运行截图；本地浏览器模拟测试另有 PNG 预览。
 
 ## 安装
 
@@ -49,11 +50,27 @@ dsh --profile web --dump-config
 dsh plugin --profile web add "github:AutomaticFlywings/dsh-theme-TNOLAR#<commit-sha>"
 ```
 
+### 修复 v0.4.0 的 `Unexpected token 'export'` 启动失败
+
+v0.4.0 曾把 `lib/client.js` 直接当 ESM 发布，而 DSH Web 实际通过经典 `<script>` 标签加载 Bundle，并要求客户端使用 `window.__ModuleLoader__.load({ id, factory })` 注册。浏览器因此会在启动页显示 `Failed to load plugins / import failed`。**v0.4.1 已修复构建格式。**
+
+如果你正被错误启动页阻断，先在终端移除旧版并重新安装（不会删除会话内容）：
+
+```bash
+# 关闭正在运行的 DSH Web 服务后执行
+dsh plugin --profile web remove dsh-theme-tnolar
+dsh plugin --profile web add "github:AutomaticFlywings/dsh-theme-TNOLAR#main"
+# 用你的正常启动命令重新启动 DSH，例如：
+dsh --profile web
+```
+
+如果安装器保留了旧的 Git 缓存，建议改用本仓库 v0.4.1 的 `.tgz` 本地安装包或固定最新 commit 安装，再重启进程、强制刷新页面。Zotero / `inject.js` 中的 `Could not establish connection` 多数来自浏览器扩展，不代表 TNOLAR 加载失败。
+
 ### 本地安装和卸载
 
 ```bash
 # 在下载了相应 tgz 的目录中执行
-dsh plugin --profile web add "./dsh-theme-tnolar-0.4.0.tgz"
+dsh plugin --profile web add "./dsh-theme-tnolar-0.4.1.tgz"
 
 # 卸载后重启 DSH Web
 dsh plugin --profile web remove dsh-theme-tnolar
@@ -127,8 +144,8 @@ dsh-theme-TNOLAR/
 │   ├── check.mjs                    # 校验构建文件与 DSH 清单
 │   └── verify-browser.py           # 浏览器端模拟宿主测试（可选）
 ├── docs/
-│   ├── preview-tnolar-theme.png    # 主题预览：模拟宿主
-│   ├── preview-tnolar-map.png      # 启动地图预览：模拟宿主
+│   ├── preview-tnolar-theme.svg    # 主题预览：GitHub 插画示意
+│   ├── preview-tnolar-map.svg      # 启动地图预览：GitHub 插画示意
 │   ├── DESIGN-SYSTEM.zh-CN.md      # 组件映射与设计规范
 │   └── PUBLISHING.zh-CN.md         # 仓库维护说明
 ├── LICENSE
@@ -161,7 +178,7 @@ DSH Bundle 的核心配置：
 
 ```bash
 npm run build
-npm run check
+npm run check     # 包含 DSH classic-script 语法与模块注册协议检查
 npm test
 npm pack --dry-run
 ```
@@ -172,7 +189,7 @@ npm pack --dry-run
 python scripts/verify-browser.py
 ```
 
-每次修改 `src/client.template.js`、`src/tnolar-theme.css` 或 `assets/world-startup.html` 后，请先执行 `npm run build`，并将更新后的 `lib/client.js` 一起提交。仓库里的 CI 在 push 和 PR 时验证构建、静态规则与安装包组成，但 **不能代替在真实 DSH 环境安装测试**。
+每次修改 `src/client.template.js`、`src/tnolar-theme.css` 或 `assets/world-startup.html` 后，请先执行 `npm run build`，并将更新后的 `lib/client.js` 一起提交。`lib/index.js` 是 Host 侧 ESM，`lib/client.js` 则必须是 classic-script；两者的打包方式不能混用。仓库里的 CI 在 push 和 PR 时验证构建、静态规则与安装包组成，但 **不能代替在真实 DSH 环境安装测试**。
 
 ## 常见问题
 
