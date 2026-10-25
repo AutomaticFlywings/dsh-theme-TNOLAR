@@ -17,7 +17,8 @@
     "README.md",
     "LICENSE",
     "THIRD_PARTY_NOTICES.md",
-    "licenses"
+    "licenses",
+    "icon.webp"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",
