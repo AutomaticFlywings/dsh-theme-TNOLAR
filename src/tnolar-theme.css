@@ -45,6 +45,7 @@ html[data-tnolar-theme="1"] :is(body, #root) {
   /* DSH's markdown and selector tokens are separate from background tokens.
    * Without these a light-profile token sheet leaves code pills white. */
   --dsw-alias-markdown-inline-code: #173641 !important;
+  --dsw-alias-markdown-tag: #153b44 !important;
   --dsw-alias-markdown-code-block: #0a2029 !important;
   --dsw-alias-markdown-code-block-banner: #14323b !important;
   --dsw-alias-markdown-code-segment-selected: #1d4c56 !important;
@@ -514,3 +515,31 @@ html[data-tnolar-theme="1"] #root [class*="DiscoverSection_categories"] button[c
   color: #f3fffb !important;
   box-shadow: inset 0 0 0 1px #83e6d7 !important;
 }
+
+/* DSH file cards use light-profile static-neutral fills even when TNOLAR is
+ * active. Override only these file components, never global neutral tokens. */
+html[data-tnolar-theme="1"] #root [data-changed-files] {
+  --changes-fill: #102d36 !important;
+  --changes-hover: #183e48 !important;
+}
+html[data-tnolar-theme="1"] #root [data-changed-files] [class*="ChangedFiles_tile"],
+html[data-tnolar-theme="1"] #root [data-presented-file] [class*="Deliverables_fileIcon"] {
+  background: rgba(141,223,213,.07) !important;
+}
+html[data-tnolar-theme="1"] #root [data-presented-file] {
+  background: #102d36 !important;
+  border-color: #3d6470 !important;
+}
+html[data-tnolar-theme="1"] #root [data-presented-file]:is(:hover,:focus-within) {
+  background: #183e48 !important;
+}
+/* DockKit active file tab depends on a separate Markdown tag fill token. */
+html[data-tnolar-theme="1"] #root [class*="dockkit_tabActive"] {
+  background: #153b44 !important;
+  color: #e2f1ed !important;
+}
+html[data-tnolar-theme="1"] #root [class*="dockkit_tabActive"]:is(:hover,:focus-visible) {
+  background: #183e48 !important;
+  color: #f0fffb !important;
+}
+
