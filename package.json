@@ -1,6 +1,6 @@
 {
   "name": "dsh-theme-tnolar",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "TNOLAR DSH strategic terminal theme with high-contrast UI and interactive four-fingerprint startup scan",
   "type": "module",
   "main": "./lib/index.js",
@@ -64,3 +64,4 @@
     "url": "https://github.com/AutomaticFlywings/dsh-theme-TNOLAR/issues"
   }
 }
+
