@@ -38,6 +38,9 @@ for(const selector of ['sessionRow','panelRow','titleRow','InputBar_card','Input
 }
 assert.match(themeCss, /--dsw-alias-bg-base/);
 assert.match(themeCss, /--dsw-alias-markdown-inline-code/);
+for (const selector of ['--dsw-alias-markdown-tag: #153b44', '[data-changed-files]', '[data-presented-file]', '[class*="dockkit_tabActive"]']) {
+  assert.ok(themeCss.includes(selector), 'Missing dark file/tab style: ' + selector);
+}
 assert.match(themeCss, /--shiki-token-comment/);
 assert.match(themeCss, /button\[class\*=\"InputBar_add\"\]/);
 assert.doesNotMatch(themeCss, /fill:\s*currentColor\s*!important/, 'Do not force SVG fill on outline icons');
